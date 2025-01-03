@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
-import './CSS/LoginSignup.css';
 
 const LoginSignup = () => {
   const [currentTab, setCurrentTab] = useState('login'); 
 
+  // Funkcja zmieniająca zakładkę na Login
   const switchToLogin = () => {
     setCurrentTab('login');
   };
 
+  // Funkcja zmieniająca zakładkę na Register
   const switchToRegister = () => {
     setCurrentTab('register');
   };
