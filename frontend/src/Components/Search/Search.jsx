@@ -4,7 +4,7 @@ import { SearchContext } from "../../Context/SearchContext";
 import all_product from "../Assets/all_product"; 
 
 const Search = () => {
-    const { setSearchResults, setSearchTerm, searchTerm } = useContext(SearchContext);  // Używamy SearchContext
+    const { setSearchResults, setSearchTerm, searchTerm } = useContext(SearchContext);  
     const searchRef = useRef(null);
     const navigate = useNavigate();
 
@@ -58,7 +58,7 @@ const Search = () => {
         ? all_product.filter((product) => {
               const nameMatch = product.name?.toLowerCase().includes(searchTerm);
               const descriptionMatch = product.description?.toLowerCase().includes(searchTerm);
-              const priceMatch = product.new_price?.toString().includes(searchTerm); // Cena na string
+              const priceMatch = product.new_price?.toString().includes(searchTerm); 
               const categoryMatch = product.category?.toLowerCase().includes(searchTerm);
 
               return nameMatch || descriptionMatch || priceMatch || categoryMatch;
