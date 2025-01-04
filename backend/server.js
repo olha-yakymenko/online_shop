@@ -295,6 +295,39 @@ app.post('/send-confirmation', (req, res) => {
   });
 });
 
+const plik = path.join(__dirname, '..', 'frontend', 'src', 'Components', 'Assets', 'all_product.js');
+
+console.log('Plik do zapisu:', plik);
+
+app.post('/save-products', (req, res) => {
+  const products = req.body;  
+  fs.writeFile(plik, `const all_product = ${JSON.stringify(products, null, 2)};\nexport default all_product;`, (err) => {
+    if (err) {
+      return res.status(500).send('Błąd zapisu do pliku');
+    }
+    res.status(200).send('Produkty zapisane pomyślnie');
+  });
+});
+
+const salesDataPath = './sales_data.json'; 
+
+app.get('/sales-report', async (req, res) => {
+  const { startDate, endDate } = req.query; 
+
+  try {
+    const data = await fs.readFile(salesDataPath, 'utf-8');
+    const sales = JSON.parse(data);
+
+    const filteredSales = sales.filter(sale => {
+      const saleDate = new Date(sale.date);
+      return saleDate >= new Date(startDate) && saleDate <= new Date(endDate);
+    });
+    res.json(filteredSales);
+  } catch (err) {
+    console.error('Error reading sales data:', err);
+    res.status(500).json({ message: 'Error fetching sales report' });
+  }
+});
 
 const port = 5055;
 app.listen(port, () => {
