@@ -12,6 +12,8 @@ import ShopContextProvider from './Context/ShopContext';
 import ShopCategory from './Pages/ShopCategory';
 import banner from './Components/Assets/banner.png';
 import Cart from './Pages/Cart';
+import Admin from './Components/Admin/Admin'
+import SalesReport from './Components/Admin/SalesReport';
 
 const queryClient = new QueryClient();
 
@@ -32,6 +34,9 @@ const AppContent = () => {
         <Route path="/mens" element={<ShopCategory banner={banner} category="men" />} />
         <Route path="/womens" element={<ShopCategory banner={banner} category="women" />} />
         <Route path="/kids" element={<ShopCategory banner={banner} category="kid" />} />
+        <Route path="/admin" element={<Admin/>}/>
+        <Route path="/admin/report" element={<SalesReport />} />
+
       </Routes>
 
     </BrowserRouter>
