@@ -276,8 +276,7 @@ app.post('/send-confirmation', (req, res) => {
     from: 'onlineshopyak@gmail.com',
     to: contactInfo.email, 
     subject: 'Potwierdzenie zamówienia',
-    text: `
-      Dziękujemy za złożenie zamówienia! Oto szczegóły:
+    text: `Dziękujemy za złożenie zamówienia! Oto szczegóły:
 
       Adres: ${address.city}, ${address.street} ${address.nr}
       Imię i Nazwisko: ${contactInfo.name} ${contactInfo.surname}
@@ -289,11 +288,13 @@ app.post('/send-confirmation', (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return res.status(500).send('Błąd wysyłania e-maila');
+      console.error('Error sending email:', error);
+      return res.status(500).json({ message: 'Błąd wysyłania e-maila' });
     }
-    res.status(200).send('Potwierdzenie wysłane');
+    res.status(200).json({ message: 'Potwierdzenie wysłane' });
   });
 });
+
 
 const plik = path.join(__dirname, '..', 'frontend', 'src', 'Components', 'Assets', 'all_product.js');
 
@@ -313,7 +314,7 @@ const salesDataPath = './sales_data.json';
 
 app.get('/sales-report', async (req, res) => {
   const { startDate, endDate } = req.query; 
-
+  
   try {
     const data = await fs.readFile(salesDataPath, 'utf-8');
     const sales = JSON.parse(data);
@@ -329,6 +330,45 @@ app.get('/sales-report', async (req, res) => {
   }
 });
 
+
+
+app.post('/submit-order', async (req, res) => {
+  const { address, contactInfo, paymentMethod, totalAmount, cartItems } = req.body;
+  console.log('Received order:', req.body);
+
+  try {
+    // Check if the file exists before attempting to read it
+    try {
+      await fs.access(salesDataPath);
+    } catch (err) {
+      console.error('Sales data file does not exist:', err);
+      return res.status(500).json({ message: 'Sales data file does not exist' });
+    }
+
+    const currentSalesData = JSON.parse(await fs.readFile(salesDataPath, 'utf8'));
+
+    cartItems.forEach((item) => {
+      const existingProduct = currentSalesData.find((product) => product.name === item.name);
+      if (existingProduct) {
+        existingProduct.totalQuantity += item.quantity;
+        existingProduct.totalRevenue += item.quantity * item.price;
+      } else {
+        currentSalesData.push({
+          name: item.name,
+          totalQuantity: item.quantity,
+          totalRevenue: item.quantity * item.price,
+          date: new Date().toISOString(),
+        });
+      }
+    });
+
+    await fs.writeFile(salesDataPath, JSON.stringify(currentSalesData, null, 2)); // Save data asynchronously
+    res.status(200).json({ message: 'Zamówienie zapisane' });
+  } catch (error) {
+    console.error('Error saving order:', error);
+    res.status(500).json({ message: 'Błąd zapisu zamówienia' });
+  }
+});
 const port = 5055;
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

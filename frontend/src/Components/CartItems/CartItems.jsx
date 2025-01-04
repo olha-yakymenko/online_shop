@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useMemo } from 'react';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 import { UserContext } from '../../Context/UserContext';
-
+import Order from '../Order/Order'
 
 const CartItems = () => {
     const { getTotalCartAmount, all_product, cartItems, removeFromCart, setCartItems } = useContext(ShopContext);
@@ -30,6 +30,7 @@ const CartItems = () => {
                 const result = await response.json();
     
                 if (response.ok) {
+                    console.log("ok")
                     const fetchedCart = result.cart.reduce((acc, item) => {
                         acc[item.id] = item.quantity;
                         return acc;
@@ -182,8 +183,8 @@ const CartItems = () => {
                     </div>
                     <div>
                         <button onClick={handleProceedToCheckout}>PROCEED TO CHECKOUT</button>
-                        {/* {showOrder && <Order totalAmount={finalTotal} clearCart={clearCart} />
-                      }  */}
+                        {showOrder && <Order totalAmount={finalTotal} clearCart={clearCart} cartItems={userCart}/>
+                      } 
                     </div>
                 </div>
                 <div className="cartitems-promocode">

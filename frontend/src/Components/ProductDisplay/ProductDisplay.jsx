@@ -180,7 +180,7 @@ const ProductDisplay = (props) => {
         }
 
         try {
-            const response = await fetch('http://localhost:5005/add-to-cart', {
+            const response = await fetch('http://localhost:5055/add-to-cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
