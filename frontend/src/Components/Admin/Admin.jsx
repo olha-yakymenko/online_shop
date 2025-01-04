@@ -4,7 +4,7 @@ import all_product from '../Assets/all_product';
 const loadProducts = all_product;
 
 const saveProductsToServer = (products) => {
-  fetch('http://localhost:5006/save-products', {
+  fetch('http://localhost:5055/save-products', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
