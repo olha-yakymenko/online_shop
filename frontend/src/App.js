@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import ShopContextProvider from './Context/ShopContext';
 import ShopCategory from './Pages/ShopCategory';
 import banner from './Components/Assets/banner.png';
+import Cart from './Pages/Cart';
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const AppContent = () => {
         <Route path="/product" element={<Product />}>
           <Route path=":productId" element={<Product />} />
         </Route>
+        <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<LoginSignup />} />
         <Route path="/mens" element={<ShopCategory banner={banner} category="men" />} />
         <Route path="/womens" element={<ShopCategory banner={banner} category="women" />} />
