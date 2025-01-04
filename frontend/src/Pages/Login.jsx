@@ -8,13 +8,13 @@ const Login = ({ switchToRegister }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  const { loginUser } = useContext(UserContext);  // Używamy kontekstu do logowania
-  const navigate = useNavigate();  // Hook do przekierowania
-  const queryClient = useQueryClient();  // Hook do zarządzania zapytaniami
+  const { loginUser } = useContext(UserContext);  
+  const navigate = useNavigate();  
+  const queryClient = useQueryClient(); 
 
   const mutation = useMutation(
     async (userData) => {
-      const response = await fetch('http://localhost:5006/login', {
+      const response = await fetch('http://localhost:5055/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

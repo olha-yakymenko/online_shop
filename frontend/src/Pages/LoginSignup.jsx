@@ -5,12 +5,10 @@ import Register from './Register';
 const LoginSignup = () => {
   const [currentTab, setCurrentTab] = useState('login'); 
 
-  // Funkcja zmieniająca zakładkę na Login
   const switchToLogin = () => {
     setCurrentTab('login');
   };
 
-  // Funkcja zmieniająca zakładkę na Register
   const switchToRegister = () => {
     setCurrentTab('register');
   };

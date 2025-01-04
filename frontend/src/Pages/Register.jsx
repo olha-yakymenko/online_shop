@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';  
 
 const registerUserApi = async (userData) => {
-  const response = await fetch('http://localhost:5001/register', {
+  const response = await fetch('http://localhost:5055/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
