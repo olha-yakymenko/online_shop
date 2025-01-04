@@ -9,7 +9,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://localhost:3001', 
+  origin: 'http://localhost:3002', 
   methods: 'GET, POST, PUT, DELETE', 
   credentials: true 
 }));
@@ -126,7 +126,7 @@ app.get('/isAuthenticated', async (req, res) => {
   }
 });
 
-const port = 5006;
+const port = 5055;
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
