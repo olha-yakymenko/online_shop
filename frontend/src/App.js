@@ -10,9 +10,7 @@ import { UserProvider, UserContext } from './Context/UserContext';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import ShopContextProvider from './Context/ShopContext';
 import ShopCategory from './Pages/ShopCategory';
-import men_banner from './Components/Assets/banner_mens.png';
-import women_banner from './Components/Assets/banner_women.png';
-import kid_banner from './Components/Assets/banner_kids.png';
+import banner from './Components/Assets/banner.png';
 
 const queryClient = new QueryClient();
 
@@ -29,9 +27,9 @@ const AppContent = () => {
           <Route path=":productId" element={<Product />} />
         </Route>
         <Route path="/login" element={<LoginSignup />} />
-        <Route path="/mens" element={<ShopCategory banner={men_banner} category="men" />} />
-        <Route path="/womens" element={<ShopCategory banner={women_banner} category="women" />} />
-        <Route path="/kids" element={<ShopCategory banner={kid_banner} category="kid" />} />
+        <Route path="/mens" element={<ShopCategory banner={banner} category="men" />} />
+        <Route path="/womens" element={<ShopCategory banner={banner} category="women" />} />
+        <Route path="/kids" element={<ShopCategory banner={banner} category="kid" />} />
       </Routes>
 
     </BrowserRouter>
