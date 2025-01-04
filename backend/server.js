@@ -126,6 +126,176 @@ app.get('/isAuthenticated', async (req, res) => {
   }
 });
 
+
+app.get('/cart', async (req, res) => {
+  const { email } = req.query;
+
+  try {
+    const data = await fs.readFile(usersFilePath, 'utf8');
+    const users = JSON.parse(data);
+    const user = users.find(user => user.email === email);
+
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    if (!user.isAuthenticated) {
+      return res.status(403).json({ message: 'Access denied, please log in' });
+    }
+
+    res.status(200).json({ cart: user.cart });
+  } catch (err) {
+    res.status(500).json({ message: 'Error processing request' });
+  }
+});
+
+app.post('/get-cart', async (req, res) => {
+  const { email } = req.body; 
+
+  try {
+    const data = await fs.readFile(usersFilePath, 'utf8');
+    const users = JSON.parse(data);
+    const user = users.find(user => user.email === email);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const cart = user.cart || [];
+    res.status(200).json({ cart });
+  } catch (err) {
+    console.error('Error fetching cart:', err);
+    res.status(500).json({ message: 'Error processing request' });
+  }
+});
+
+
+app.post('/add-to-cart', async (req, res) => {
+  const { email, productId } = req.body; 
+
+  try {
+    const data = await fs.readFile(usersFilePath, 'utf8');
+    const users = JSON.parse(data);
+    const user = users.find(user => user.email === email);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (!user.cart) {
+      user.cart = [];
+    }
+
+    const productInCart = user.cart.find(item => item.id === productId);
+
+    if (productInCart) {
+      productInCart.quantity += 1;
+    } else {
+      user.cart.push({ id: productId, quantity: 1 });
+    }
+
+    await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2));
+
+    res.status(200).json({ message: 'Product added to cart' });
+  } catch (err) {
+    console.error('Error adding product to cart:', err);
+    res.status(500).json({ message: 'Error processing request' });
+  }
+});
+
+
+app.post('/remove-from-cart', async (req, res) => {
+  const { email, productId } = req.body; 
+
+  try {
+    const data = await fs.readFile(usersFilePath, 'utf8');
+    const users = JSON.parse(data);
+    const user = users.find(user => user.email === email);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (!user.cart || !user.cart.some(item => item.id === productId)) {
+      return res.status(400).json({ message: 'Product not found in cart' });
+    }
+
+    const productInCart = user.cart.find(item => item.id === productId);
+
+    if (productInCart.quantity > 1) {
+      productInCart.quantity -= 1;
+    } else {
+      user.cart = user.cart.filter(item => item.id !== productId);
+    }
+
+    await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2));
+
+    res.status(200).json({ message: 'Product quantity updated or removed from cart' });
+  } catch (err) {
+    console.error('Error removing product from cart:', err);
+    res.status(500).json({ message: 'Error processing request' });
+  }
+});
+
+
+app.post('/clear-cart', async (req, res) => {
+  const { email } = req.body; 
+
+  try {
+    const data = await fs.readFile(usersFilePath, 'utf8');
+    const users = JSON.parse(data);
+    const user = users.find(user => user.email === email);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.cart = [];
+
+    await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2));
+
+    res.status(200).json({ message: 'Cart has been cleared' });
+  } catch (err) {
+    console.error('Error clearing cart:', err);
+    res.status(500).json({ message: 'Error processing request' });
+  }
+});
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'onlineshopyak@gmail.com', 
+    pass: 'lrop lcqd wqer xaqm', 
+  },
+});
+
+app.post('/send-confirmation', (req, res) => {
+  const { contactInfo, address, paymentMethod, totalAmount } = req.body;
+
+  const mailOptions = {
+    from: 'onlineshopyak@gmail.com',
+    to: contactInfo.email, 
+    subject: 'Potwierdzenie zamówienia',
+    text: `
+      Dziękujemy za złożenie zamówienia! Oto szczegóły:
+
+      Adres: ${address.city}, ${address.street} ${address.nr}
+      Imię i Nazwisko: ${contactInfo.name} ${contactInfo.surname}
+      E-mail: ${contactInfo.email}
+      Metoda płatności: ${paymentMethod}
+      Kwota całkowita: $${totalAmount}
+    `,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return res.status(500).send('Błąd wysyłania e-maila');
+    }
+    res.status(200).send('Potwierdzenie wysłane');
+  });
+});
+
+
 const port = 5055;
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
