@@ -14,6 +14,7 @@ import { UserProvider, UserContext } from './Context/UserContext';
 import ProductList from './Components/Admin/Admin';
 import SalesReport from './Components/Admin/SalesReport';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import  ShopContext  from './Context/ShopContext';
 
 const queryClient = new QueryClient();
 
@@ -44,11 +45,13 @@ const AppContent = () => {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <ShopContext>
       <UserProvider>
         <SearchContextProvider>
           <AppContent />
         </SearchContextProvider>
       </UserProvider>
+      </ShopContext>
     </QueryClientProvider>
   );
 }

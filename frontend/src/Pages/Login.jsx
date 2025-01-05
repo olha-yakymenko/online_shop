@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { UserContext } from '../Context/UserContext'; 
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
-
+import './CSS/LoginSignup.css'
 const Login = ({ switchToRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,10 +32,10 @@ const Login = ({ switchToRegister }) => {
         loginUser(result.user);
         if (result.user.role === 'admin') {
           alert('Admin login successful!');
-          navigate('/admin');  // Przekierowanie na stronę administratora
+          navigate('/admin');  
         } else {
           alert('Login successful!');
-          navigate('/');  // Przekierowanie na stronę główną (np. sklep)
+          navigate('/');  
         }
       },
       onError: (error) => {
@@ -53,7 +53,7 @@ const Login = ({ switchToRegister }) => {
       return;
     }
 
-    mutation.mutate(userData);  // Używamy mutacji do obsługi logowania
+    mutation.mutate(userData);  
   };
 
   return (
@@ -76,7 +76,7 @@ const Login = ({ switchToRegister }) => {
             required
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Wyświetlanie błędów */}
+        {error && <p style={{ color: 'red' }}>{error}</p>}  
         <button type="submit" disabled={mutation.isLoading}>
           {mutation.isLoading ? 'Logging in...' : 'Login'}
         </button>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-query';  
+import './CSS/LoginSignup.css'
 
 const registerUserApi = async (userData) => {
   const response = await fetch('http://localhost:5055/register', {
