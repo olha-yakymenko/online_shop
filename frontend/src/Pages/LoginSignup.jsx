@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
+import './CSS/LoginSignup.css'
 
 const LoginSignup = () => {
   const [currentTab, setCurrentTab] = useState('login'); 
