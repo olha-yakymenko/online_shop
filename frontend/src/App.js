@@ -15,7 +15,7 @@ import ProductList from './Components/Admin/Admin';
 import SalesReport from './Components/Admin/SalesReport';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import  ShopContext  from './Context/ShopContext';
-
+import AdminNavbar from './Components/Navbar/AdminNavbar';
 const queryClient = new QueryClient();
 
 const AppContent = () => {
@@ -23,7 +23,8 @@ const AppContent = () => {
 
   return (
     <BrowserRouter>
-      {user?.role !== 'admin' && <Navbar />}
+      {user?.role === 'admin' ? <AdminNavbar /> : <Navbar />}
+
       <Routes>
         <Route path="/" element={<Shop />} />
         <Route path="/mens" element={<ShopCategory banner={banner} category="men" />} />
@@ -34,9 +35,13 @@ const AppContent = () => {
         </Route>
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<LoginSignup />} />
-        <Route path="/search-results" element={<SearchResults />} /> 
-        <Route path="/admin" element={<ProductList />} />
-        <Route path="/admin/report" element={<SalesReport />} />
+        <Route path="/search-results" element={<SearchResults />} />
+        {user?.role === 'admin' && (
+          <>
+            <Route path="/admin" element={<ProductList />} />
+            <Route path="/admin/report" element={<SalesReport />} />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   );
