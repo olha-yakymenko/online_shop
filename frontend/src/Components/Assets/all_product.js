@@ -35,7 +35,7 @@ const all_product = [
         "comment": "Love the design!"
       }
     ],
-    "isAvailable": false
+    "isAvailable": true
   },
   {
     "id": 2,
@@ -1039,7 +1039,8 @@ const all_product = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "isAvailable": true
   },
   {
     "id": 30,
@@ -1074,7 +1075,8 @@ const all_product = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "isAvailable": true
   },
   {
     "id": 31,
@@ -1109,7 +1111,8 @@ const all_product = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "isAvailable": true
   },
   {
     "id": 32,

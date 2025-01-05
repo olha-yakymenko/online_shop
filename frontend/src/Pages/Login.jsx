@@ -12,6 +12,38 @@ const Login = ({ switchToRegister }) => {
   const navigate = useNavigate();  
   const queryClient = useQueryClient(); 
 
+  // const mutation = useMutation(
+  //   async (userData) => {
+  //     const response = await fetch('http://localhost:5055/login', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(userData),
+  //     });
+  //     const result = await response.json();
+  //     if (!response.ok) {
+  //       throw new Error(result.message || 'Invalid credentials');
+  //     }
+  //     return result;
+  //   },
+  //   {
+  //     onSuccess: (result) => {
+  //       loginUser(result.user);
+  //       if (result.user.role === 'admin') {
+  //         alert('Admin login successful!');
+  //         navigate('/admin');  
+  //       } else {
+  //         alert('Login successful!');
+  //         navigate('/');  
+  //       }
+  //     },
+  //     onError: (error) => {
+  //       setError(error.message);
+  //     }
+  //   }
+  // );
+
   const mutation = useMutation(
     async (userData) => {
       const response = await fetch('http://localhost:5055/login', {
@@ -29,20 +61,26 @@ const Login = ({ switchToRegister }) => {
     },
     {
       onSuccess: (result) => {
+        // Zapisz użytkownika w localStorage
+        localStorage.setItem('loggedUser', JSON.stringify(result.user));
+  
+        // Ustaw użytkownika w kontekście
         loginUser(result.user);
+  
         if (result.user.role === 'admin') {
           alert('Admin login successful!');
-          navigate('/admin');  
+          navigate('/admin');
         } else {
           alert('Login successful!');
-          navigate('/');  
+          navigate('/');
         }
       },
       onError: (error) => {
         setError(error.message);
-      }
+      },
     }
   );
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();

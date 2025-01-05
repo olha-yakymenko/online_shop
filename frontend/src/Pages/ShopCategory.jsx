@@ -6,7 +6,7 @@ const ShopCategory = (props) => {
     const { all_product } = useContext(ShopContext);
 
     const cat_product = all_product.filter((item) => {
-        return props.category === item.category; 
+        return props.category === item.category && item.isAvailable===true; 
     });
 
     const [sortCriteria, setSortCriteria] = useState("price_asc");

@@ -2,7 +2,7 @@ import React, { useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
 import all_product from "../Assets/all_product"; 
-
+import './Search.css'
 const Search = () => {
     const { setSearchResults, setSearchTerm, searchTerm } = useContext(SearchContext);  
     const searchRef = useRef(null);
@@ -12,7 +12,7 @@ const Search = () => {
         const term = e.target.value.toLowerCase();
         setSearchTerm(term);
 
-        const filteredResults = all_product.filter((product) => {
+        const filteredResults = all_product.filter(item => item.isAvailable===true).filter((product) => {
             const nameMatch = product.name?.toLowerCase().includes(term); 
             const descriptionMatch = product.description?.toLowerCase().includes(term); 
             const priceMatch = product.new_price?.toString().includes(term); 
