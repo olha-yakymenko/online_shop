@@ -1,12 +1,14 @@
 .nav-search {
     position: relative;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 10px;
+    /* max-width: 500px; */
+    /* margin: 0 auto; */
+    /* padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 50px; */
+    margin-top: 30px;
 }
 
 .nav-search input {
@@ -17,6 +19,7 @@
     border-radius: 5px;
     outline: none;
     transition: all 0.3s ease;
+    height: 50px;
 }
 
 .nav-search input:focus {
@@ -26,9 +29,8 @@
 
 .search-results-list {
     position: absolute;
-    top: 100%;
     left: 0;
-    width: 100%;
+    width: 250px;
     max-height: 300px;
     overflow-y: auto;
     border: 1px solid #ddd;
@@ -37,6 +39,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 10;
     display: none; 
+    
 }
 
 .nav-search input:valid + .search-results-list {
@@ -84,7 +87,7 @@
 
 @media (max-width: 768px) {
     .nav-search {
-        max-width: 100%;
+        max-width: 400px;
         padding: 10px;
     }
 

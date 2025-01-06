@@ -28,7 +28,7 @@ const Search = () => {
         if (e.key === "Enter") {
             e.preventDefault();
 
-            const filteredResults = all_product.filter((product) => {
+            const filteredResults = all_product.filter(item => item.isAvailable===true).filter((product) => {
                 const nameMatch = product.name?.toLowerCase().includes(searchTerm);
                 const descriptionMatch = product.description?.toLowerCase().includes(searchTerm); 
                 const priceMatch = product.new_price?.toString().includes(searchTerm); 
@@ -55,7 +55,7 @@ const Search = () => {
     }, []);
 
     const filteredSuggestions = searchTerm
-        ? all_product.filter((product) => {
+        ? all_product.filter(item => item.isAvailable===true).filter((product) => {
               const nameMatch = product.name?.toLowerCase().includes(searchTerm);
               const descriptionMatch = product.description?.toLowerCase().includes(searchTerm);
               const priceMatch = product.new_price?.toString().includes(searchTerm); 
