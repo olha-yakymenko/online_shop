@@ -361,7 +361,7 @@ app.post('/submit-order', async (req, res) => {
       }
     });
 
-    await fs.writeFile(salesDataPath, JSON.stringify(currentSalesData, null, 2)); // Save data asynchronously
+    await fs.writeFile(salesDataPath, JSON.stringify(currentSalesData, null, 2));
     res.status(200).json({ message: 'Zamówienie zapisane' });
   } catch (error) {
     console.error('Error saving order:', error);
@@ -473,7 +473,7 @@ app.delete('/remove-sale-code', async (req, res) => {
     const data = await fs.readFile(usersFilePath, 'utf8');
     const users = JSON.parse(data);
 
-    const user = users.filter(user => user.role="user").find(user => user.email === email);
+    const user = users.filter(user => user.role==="user").find(user => user.email === email);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -496,7 +496,11 @@ app.delete('/remove-sale-code', async (req, res) => {
   }
 });
 app.get('/get-sale-codes', async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.query;  
+
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required' });
+  }
 
   try {
     const data = await fs.readFile(usersFilePath, 'utf8');
@@ -514,6 +518,7 @@ app.get('/get-sale-codes', async (req, res) => {
     res.status(500).json({ message: 'Error processing request' });
   }
 });
+
 
 app.get('/get-users', async (req, res) => {
   try {
