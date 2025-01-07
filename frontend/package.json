@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@tanstack/react-query": "^5.62.12",
+    "axios": "^1.7.9",
     "cra-template": "1.2.0",
     "formik": "^2.4.6",
     "react": "^18.3.1",

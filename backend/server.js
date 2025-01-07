@@ -9,7 +9,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://localhost:3002', 
+  origin: 'http://localhost:3000', 
   methods: 'GET, POST, PUT, DELETE', 
   credentials: true 
 }));
@@ -337,7 +337,6 @@ app.post('/submit-order', async (req, res) => {
   console.log('Received order:', req.body);
 
   try {
-    // Check if the file exists before attempting to read it
     try {
       await fs.access(salesDataPath);
     } catch (err) {
@@ -369,6 +368,166 @@ app.post('/submit-order', async (req, res) => {
     res.status(500).json({ message: 'Błąd zapisu zamówienia' });
   }
 });
+app.delete('/delete-user', async (req, res) => {
+  const { email } = req.body; 
+
+  try {
+    const data = await fs.readFile(usersFilePath, 'utf8');
+    const users = JSON.parse(data);
+
+    const userIndex = users.findIndex(user => user.email === email);
+
+    if (userIndex === -1) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    users.splice(userIndex, 1);
+
+    await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2));
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (err) {
+    console.error('Error during user deletion:', err);
+    res.status(500).json({ message: 'Error processing request' });
+  }
+});
+
+app.post('/users/:email/orders/:orderId/discount', (req, res) => {
+  const { email, orderId } = req.params;
+  const { discount } = req.body; 
+  
+  const result = addDiscountToOrder(email, parseInt(orderId), discount);
+  
+  if (result.error) {
+    return res.status(400).json(result);
+  }
+  
+  return res.json(result);
+});
+
+function addSaleToUser(email, saleValue) {
+  const user = users.filter(user => user.role !== 'admin').find(user => user.email === email); 
+
+  if (user) {
+    user.sale = saleValue; 
+    return { message: 'Rabat dodany', user };
+  } else {
+    return { error: 'Nie znaleziono użytkownika' };
+  }
+}
+
+app.post('/api/users/:email/sale', (req, res) => {
+  const { email } = req.params;
+  const { sale } = req.body; 
+  
+  const result = addSaleToUser(email, sale);
+  
+  if (result.error) {
+    return res.status(400).json(result);
+  }
+  
+  return res.json(result);
+});
+
+const crypto = require('crypto'); 
+
+const generateSaleCode = () => {
+  return crypto.randomBytes(3).toString('hex').toUpperCase(); 
+};
+
+app.post('/add-sale-code', async (req, res) => {
+  const { email } = req.body; 
+
+  try {
+    const data = await fs.readFile(usersFilePath, 'utf8');
+    const users = JSON.parse(data);
+
+    const user = users.filter(user => user.role !== 'admin').find(user => user.email === email);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const saleCode = generateSaleCode();
+
+    if (user.sale.includes(saleCode)) {
+      return res.status(400).json({ message: 'Sale code already exists for this user' });
+    }
+
+    user.sale.push(saleCode);
+
+    await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2));
+
+    res.status(200).json({ message: 'Sale code added successfully', saleCode });
+  } catch (err) {
+    console.error('Error during sale code addition:', err);
+    res.status(500).json({ message: 'Error processing request' });
+  }
+});
+
+
+app.delete('/remove-sale-code', async (req, res) => {
+  const { email, saleCode } = req.body; 
+
+  try {
+    const data = await fs.readFile(usersFilePath, 'utf8');
+    const users = JSON.parse(data);
+
+    const user = users.filter(user => user.role="user").find(user => user.email === email);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const codeIndex = user.sale.indexOf(saleCode);
+
+    if (codeIndex === -1) {
+      return res.status(404).json({ message: 'Sale code not found for this user' });
+    }
+
+    user.sale.splice(codeIndex, 1);
+
+    await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2));
+
+    res.status(200).json({ message: 'Sale code removed successfully', saleCode });
+  } catch (err) {
+    console.error('Error during sale code removal:', err);
+    res.status(500).json({ message: 'Error processing request' });
+  }
+});
+app.get('/get-sale-codes', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const data = await fs.readFile(usersFilePath, 'utf8');
+    const users = JSON.parse(data);
+
+    const user = users.find(user => user.email === email);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ saleCodes: user.sale });
+  } catch (err) {
+    console.error('Error during fetching sale codes:', err);
+    res.status(500).json({ message: 'Error processing request' });
+  }
+});
+
+app.get('/get-users', async (req, res) => {
+  try {
+    const data = await fs.readFile(usersFilePath, 'utf8');
+    const users = JSON.parse(data).filter(user => user.role !== 'admin');  
+
+    res.status(200).json(users);
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).json({ message: 'Error fetching users' });  
+  }
+});
+
+
 const port = 5055;
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

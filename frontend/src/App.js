@@ -16,6 +16,7 @@ import SalesReport from './Components/Admin/SalesReport';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import  ShopContext  from './Context/ShopContext';
 import AdminNavbar from './Components/Navbar/AdminNavbar';
+import AdminUserPanel from './Components/Admin/AdminUserPanel';
 const queryClient = new QueryClient();
 
 const AppContent = () => {
@@ -40,6 +41,7 @@ const AppContent = () => {
           <>
             <Route path="/admin" element={<ProductList />} />
             <Route path="/admin/report" element={<SalesReport />} />
+            <Route path="/admin/user-panel" element={<AdminUserPanel/>} />
           </>
         )}
       </Routes>

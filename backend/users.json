@@ -6,7 +6,10 @@
     "password": "$2b$10$B4nloElIQNksivE1bjwN2.9/3vaNKBux85TMv2Cxzf1b4vIqTEVO6",
     "isAuthenticated": true,
     "cart": [],
-    "role": "user"
+    "role": "user",
+    "sale": [
+      "E58000"
+    ]
   },
   {
     "firstName": "Jan",
