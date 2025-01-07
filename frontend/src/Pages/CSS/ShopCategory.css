@@ -1,0 +1,141 @@
+.shop-main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+    justify-content: space-between; 
+}
+
+.shopcategory-banner {
+    display: block;
+    margin: 30px auto;
+    width: 82%;
+}
+
+.shopcategory-indexSort {
+    display: flex;
+    margin: 0 20px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; 
+    gap: 15px;
+}
+
+.shopcategory-products {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    row-gap: 40px;
+    gap: 20px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown img {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 4px;
+    margin-top: 10px;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dropdown-content.open {
+    display: block;
+    opacity: 1;
+}
+
+.filters-section {
+    margin: 20px;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%; 
+    max-width: 300px; 
+    overflow: auto; 
+}
+
+.filters-section h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #3d3d3d;
+}
+
+.filters-section h5 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 10px 0;
+    color: #656565;
+}
+
+.filters-section div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.filters-section label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #3d3d3d;
+    cursor: pointer;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 1024px) {
+    .shopcategory-products {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .shop-main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filters-section {
+        margin: 20px 10px;
+        max-width: 100%; 
+    }
+
+    .shopcategory-products {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+
+    .shopcategory-indexSort {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .shopcategory-loadmore {
+        margin: 30px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .shopcategory-products {
+        grid-template-columns: 1fr; 
+    }
+}
