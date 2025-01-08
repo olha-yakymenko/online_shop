@@ -3,7 +3,7 @@ import { ShopContext } from '../../Context/ShopContext';
 import { UserContext } from '../../Context/UserContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 import Order from '../Order/Order';
-
+import './CartItems.css'
 const CartItems = () => {
     const { getTotalCartAmount, all_product, cartItems, removeFromCart, setCartItems } = useContext(ShopContext);
     const { user } = useContext(UserContext);
