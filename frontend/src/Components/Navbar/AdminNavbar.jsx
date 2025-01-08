@@ -1,51 +1,26 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-// import './Navbar.css'
-// const AdminNavbar = () => {
-//   return (
-//     <nav className="nav-logo">
-//         <h1>Panel Administratora</h1>
-//       <ul className="nav-menu">
-//         <li>
-//           <Link to="/admin">
-//             Stan sklepu
-//           </Link>
-//         </li>
-//         <li >
-//           <Link to="/admin/report" >
-//             Generowanie raportu
-//           </Link>
-//         </li>
-//       </ul>
-//     </nav>
-//   );
-// };
-// export default AdminNavbar;
-
-
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+
 import { UserContext } from '../../Context/UserContext';
 
 const AdminNavbar = () => {
-  const { logoutUser } = useContext(UserContext); // Pobieranie funkcji wylogowania z kontekstu
+  const { logoutUser } = useContext(UserContext);
 
   return (
-    <nav className="nav-logo">
-      <h1>Panel Administratora</h1>
-      <ul className="nav-menu">
-        <li>
-          <Link to="/admin">Stan sklepu</Link>
-        </li>
-        <li>
-          <Link to="/admin/report">Generowanie raportu</Link>
-        </li>
-        <li>
-          <button onClick={logoutUser} className="logout-button">Wyloguj</button>
-        </li>
-      </ul>
-    </nav>
+    <AppBar position="static" className="nav-logo">
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Admin Panel
+        </Typography>
+        <Button color="inherit" component={Link} to="/admin" className="nav-menu-link">Store Status</Button>
+        <Button color="inherit" component={Link} to="/admin/report" className="nav-menu-link">Generate Report</Button>
+        <Button color="inherit" onClick={logoutUser} className="logout-button">Log Out</Button>
+      </Toolbar>
+    </AppBar>
   );
 };
 
