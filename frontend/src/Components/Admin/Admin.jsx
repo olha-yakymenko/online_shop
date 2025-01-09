@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import all_product from '../Assets/all_product';
-
-const loadProducts = all_product;
-
+import product_availability from '../Assets/availibility';
 const saveProductsToServer = (products) => {
+
   fetch('http://localhost:5055/save-products', {
     method: 'POST',
     headers: {
@@ -11,7 +10,12 @@ const saveProductsToServer = (products) => {
     },
     body: JSON.stringify(products),
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Błąd serwera: ${response.statusText}`);
+      }
+      return response.json();
+    })
     .then(data => {
       console.log('Produkty zostały zapisane na serwerze:', data);
     })
@@ -24,7 +28,15 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    setProducts(loadProducts);
+    const mergedProducts = all_product.map(product => {
+      const availability = product_availability.find(avail => avail.id === product.id);
+      return {
+        ...product,
+        isAvailable: availability ? availability.isAvailable : false, // Domyślnie niedostępny, jeśli brak danych
+      };
+    });
+
+    setProducts(mergedProducts);
   }, []);
 
   const toggleAvailability = (id) => {

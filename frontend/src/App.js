@@ -21,7 +21,7 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   const { user } = useContext(UserContext);
-
+      console.log('Current user:', user);
   return (
     <BrowserRouter>
       {user?.role === 'admin' ? <AdminNavbar /> : <Navbar />}

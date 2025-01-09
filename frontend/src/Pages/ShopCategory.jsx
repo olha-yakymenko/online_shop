@@ -2,14 +2,22 @@ import React, { useContext, useState, useEffect } from 'react';
 import { ShopContext } from '../Context/ShopContext';
 import Item from '../Components/Item/Item';
 import './CSS/ShopCategory.css'
+import product_availability from '../Components/Assets/availibility';
+
 
 const ShopCategory = (props) => {
     const { all_product } = useContext(ShopContext);
-
-    const cat_product = all_product.filter((item) => {
-        return props.category === item.category && item.isAvailable===true; 
-    });
-
+    const cat_product = all_product
+  .map((item) => {
+    const availability = product_availability.find(avail => avail.id === item.id);
+    return {
+      ...item,
+      isAvailable: availability ? availability.isAvailable : false, 
+    };
+  })
+  .filter((item) => {
+    return props.category === item.category && item.isAvailable === true;
+  });
     const [sortCriteria, setSortCriteria] = useState("price_asc");
     const [filters, setFilters] = useState({
         size: [],
@@ -42,6 +50,7 @@ const ShopCategory = (props) => {
         });
         setSortCriteria("price_asc");
     }, [props.category]); 
+
 
     const handleFilterChange = (filterType, value) => {
         setFilters((prevFilters) => {
@@ -89,12 +98,11 @@ const ShopCategory = (props) => {
 
     return (
         <div className='shop-category'>
-            <img className='shopcategory-banner' src={props.banner} alt="" />
-            <div className="shopcategory-indexSort">
+            <div className="search-results-sort">
                 <p>
                     <span>Showing {sortedProducts.length}</span> out of {cat_product.length} products
                 </p>
-                <div className="shopcategory-sort">
+                <div className="sort-options">
                     <label>Sort by:</label>
                     <select value={sortCriteria} onChange={handleSortChange}>
                         <option value="price_asc">Price: Low to High</option>

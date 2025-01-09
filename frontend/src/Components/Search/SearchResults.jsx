@@ -76,12 +76,12 @@ const SearchResults = () => {
                     <span>Showing {filteredProducts.length}</span> out of {searchResults.length} products
                 </p>
                 <div className="sort-options">
-                    <label>Sortuj według: </label>
+                <label>Sort by:</label>
                     <select value={sortCriteria} onChange={handleSortChange}>
-                        <option value="price_asc">Cena: Niska do Wysokiej</option>
-                        <option value="price_desc">Cena: Wysoka do Niskiej</option>
-                        <option value="name_asc">Nazwa: A do Z</option>
-                        <option value="name_desc">Nazwa: Z do A</option>
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                        <option value="name_asc">Name: A to Z</option>
+                        <option value="name_desc">Name: Z to A</option>
                     </select>
                 </div>
             </div>

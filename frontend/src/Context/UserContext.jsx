@@ -24,7 +24,6 @@
 
 
 import React, { createContext, useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
 
 export const UserContext = createContext();
 

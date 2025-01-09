@@ -296,13 +296,13 @@ app.post('/send-confirmation', (req, res) => {
 });
 
 
-const plik = path.join(__dirname, '..', 'frontend', 'src', 'Components', 'Assets', 'all_product.js');
+const plik = path.join(__dirname, '..', 'frontend', 'src', 'Components', 'Assets', 'availibility.js');
 
 console.log('Plik do zapisu:', plik);
 
 app.post('/save-products', (req, res) => {
   const products = req.body;  
-  fs.writeFile(plik, `const all_product = ${JSON.stringify(products, null, 2)};\nexport default all_product;`, (err) => {
+  fs.writeFile(plik, `const product_availability = ${JSON.stringify(products, null, 2)};\nexport default product_availability;`, (err) => {
     if (err) {
       return res.status(500).send('Błąd zapisu do pliku');
     }

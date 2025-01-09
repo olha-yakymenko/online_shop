@@ -1,38 +1,36 @@
-
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './DescriptionBox.css';
+import { UserContext } from '../../Context/UserContext';
 
 const DescriptionBox = ({ product }) => {
-    const [activeTab, setActiveTab] = useState('description'); 
+    const { user } = useContext(UserContext);
+    const [activeTab, setActiveTab] = useState('description');
     const [newComment, setNewComment] = useState('');
-    const [newRating, setNewRating] = useState(1);
     const [comments, setComments] = useState(product.comments);
-    const [likes, setLikes] = useState(product.likes);
-
-    console.log("ID", product.id);
-
-    const averageRating = likes.reduce((acc, curr) => acc + curr, 0) / likes.length;
 
     const handleAddComment = () => {
-        if (newComment && newRating >= 1 && newRating <= 5) {
+        if (!user) {
+            alert("You must be logged in to add a comment.");
+            return;
+        }
+
+        if (newComment.trim()) {
             const updatedComments = [
                 ...comments,
-                { user: "User", comment: newComment }
+                { user: user.name || "You", comment: newComment.trim() }
             ];
-            const updatedLikes = [...likes, newRating];
 
             setComments(updatedComments);
-            setLikes(updatedLikes);
+
 
             localStorage.setItem(
                 `product_${product.id}`,
-                JSON.stringify({ ...product, comments: updatedComments, likes: updatedLikes })
+                JSON.stringify({ ...product, comments: updatedComments })
             );
 
             setNewComment('');
-            setNewRating(1);
         } else {
-            alert("Please provide a valid comment and rating (1-5).");
+            alert("Please provide a valid comment.");
         }
     };
 
@@ -62,9 +60,6 @@ const DescriptionBox = ({ product }) => {
 
             {activeTab === 'reviews' && (
                 <div className="descriptionbox-reviews">
-                    <div className="average-rating">
-                        <strong>Average Rating:</strong> {averageRating.toFixed(1)} / 5
-                    </div>
                     <div className="comments">
                         {comments.map((comment, index) => (
                             <div key={index} className="comment">
@@ -73,26 +68,18 @@ const DescriptionBox = ({ product }) => {
                         ))}
                     </div>
 
-                    <div className="add-comment-form">
-                        <textarea
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                            placeholder="Add a comment..."
-                        />
-                        <div>
-                            <label>
-                                Rating (1 to 5):
-                                <input
-                                    type="number"
-                                    value={newRating}
-                                    onChange={(e) => setNewRating(Math.min(5, Math.max(1, e.target.value)))}
-                                    min="1"
-                                    max="5"
-                                />
-                            </label>
+                    {user ? (
+                        <div className="add-comment-form">
+                            <textarea
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)}
+                                placeholder="Add a comment..."
+                            />
+                            <button onClick={handleAddComment}>Add Comment</button>
                         </div>
-                        <button onClick={handleAddComment}>Add Comment</button>
-                    </div>
+                    ) : (
+                        <p>You must be logged in to add a comment.</p>
+                    )}
                 </div>
             )}
         </div>
