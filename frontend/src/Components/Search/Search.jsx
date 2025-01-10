@@ -28,7 +28,8 @@ const Search = () => {
             const descriptionMatch = product.description?.toLowerCase().includes(term);
             const priceMatch = product.new_price?.toString().includes(term);
             const categoryMatch = product.category?.toLowerCase().includes(term);
-            return nameMatch || descriptionMatch || priceMatch || categoryMatch;
+            const typeMatch = product.type?.toLowerCase().includes(term);
+            return nameMatch || descriptionMatch || priceMatch || categoryMatch || typeMatch;
         });
     };
 

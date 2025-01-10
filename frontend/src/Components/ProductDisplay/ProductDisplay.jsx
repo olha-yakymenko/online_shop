@@ -4,6 +4,7 @@ import star_icon from '../Assets/star_icon.png';
 import star_dull_icon from '../Assets/star_dull_icon.png';
 import { ShopContext } from '../../Context/ShopContext';
 import { UserContext } from '../../Context/UserContext';
+import product_availability from '../Assets/availibility';
 
 const ProductDisplay = (props) => {
     const { product } = props;
@@ -127,6 +128,12 @@ const ProductDisplay = (props) => {
                     </div>
                 </div>
                 <button onClick={handleAddToCart}>ADD TO CART</button>
+                <p className="productdisplay-right-category">
+                    <span>Category:</span> {product.category}
+                </p>
+                <p className="productdisplay-right-category">
+                    <span>Type:</span> {product.type}
+                </p>
             </div>
         </div>
     );

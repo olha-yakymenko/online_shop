@@ -109,6 +109,29 @@
     margin-bottom: 8px;
 }
 
+.type-button {
+    font-size: 20px;
+    padding: 10px 20px;
+    margin: 5px;
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.type-button.active {
+    background-color: #ff9900;
+    color: #fff;
+    border-color: #ff9900;
+}
+
+.type-button:hover {
+    background-color: #ceffaa;
+    color: #000;
+}
+
 
 @media (max-width: 1024px) {
     .shopcategory-products {
