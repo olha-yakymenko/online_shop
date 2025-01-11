@@ -3,7 +3,10 @@ import './Hero.css'
 import banner from '../Assets/banner.png'
 const Hero = () => {
   return (
-    <img  src={banner} alt="" />
+    <div className='hero'>
+      <img className='banner' src={banner} alt="" />
+    </div>
+    
   );
 };
 

@@ -120,7 +120,8 @@
     }
 
     .productdisplay-left {
-        justify-content: center;
+        /* justify-content: center; */
+        display: none;
     }
 
     .productdisplay-right {

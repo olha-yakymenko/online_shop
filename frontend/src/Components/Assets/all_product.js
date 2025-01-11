@@ -1,15 +1,15 @@
-import p1_img from "./product_1.png";
-import p2_img from "./product_2.png";
-import p3_img from "./product_3.png";
-import p4_img from "./product_4.png";
-import p5_img from "./product_5.png";
-import p6_img from "./product_6.png";
-import p7_img from "./product_7.png";
-import p8_img from "./product_8.png";
-import p9_img from "./product_9.png";
-import p10_img from "./product_10.png";
-import p11_img from "./product_11.png";
-import p12_img from "./product_12.png";
+import p1_img from "./p_1.png";
+import p2_img from "./p_2.png";
+import p3_img from "./p_3.png";
+import p4_img from "./p_4.png";
+import p5_img from "./p_5.png";
+import p6_img from "./p_6.png";
+import p7_img from "./p_7.png";
+import p8_img from "./p_8.png";
+import p9_img from "./p_9.png";
+import p10_img from "./p_10.png";
+import p11_img from "./p_11.png";
+import p12_img from "./p_12.png";
 import p13_img from "./product_13.png";
 import p14_img from "./product_14.png";
 import p15_img from "./product_15.png";
@@ -59,7 +59,7 @@ const all_product = [
     id: 2,
     name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     category: "women",
-    type: "Blouse",
+    type: "Dress",
     image: p2_img,
     new_price: 85.0,
     old_price: 120.5,
@@ -79,7 +79,7 @@ const all_product = [
     id: 3,
     name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     category: "women",
-    type: "Blouse",
+    type: "Dress",
     image: p3_img,
     new_price: 60.0,
     old_price: 100.5,
@@ -99,7 +99,7 @@ const all_product = [
     id: 4,
     name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     category: "women",
-    type: "Blouse",
+    type: "Dress",
     image: p4_img,
     new_price: 100.0,
     old_price: 150.0,
@@ -119,7 +119,7 @@ const all_product = [
     id: 5,
     name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     category: "women",
-    type: "Blouse",
+    type: "Dress",
     image: p5_img,
     new_price: 85.0,
     old_price: 120.5,
@@ -239,7 +239,7 @@ const all_product = [
     id: 11,
     name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     category: "women",
-    type: "Blouse",
+    type: "Skirt",
     image: p11_img,
     new_price: 85.0,
     old_price: 120.5,
@@ -259,7 +259,7 @@ const all_product = [
     id: 12,
     name: "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     category: "women",
-    type: "Blouse",
+    type: "Skirt",
     image: p12_img,
     new_price: 85.0,
     old_price: 120.5,

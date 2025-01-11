@@ -3,8 +3,8 @@ const product_availability = [
     "id": 1,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
-    "type": "Blouse",
-    "image": "/static/media/product_1.5a757396ee7ff5dd91c1.png",
+    "type": "Dress",
+    "image": "/static/media/p_1.d471930c4ebeb6864b79.png",
     "new_price": 50,
     "old_price": 80.5,
     "filters": {
@@ -36,14 +36,16 @@ const product_availability = [
         "comment": "Love the design!"
       }
     ],
-    "isAvailable": true
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
+    "popular": true
   },
   {
     "id": 2,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
-    "type": "Blouse",
-    "image": "/static/media/product_2.d4e74f367160ec10fb34.png",
+    "type": "Dress",
+    "image": "/static/media/p_2.a8dcda2ac94ebb53172d.png",
     "new_price": 85,
     "old_price": 120.5,
     "filters": {
@@ -75,14 +77,16 @@ const product_availability = [
         "comment": "A bit pricey, but looks good."
       }
     ],
-    "isAvailable": true
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 3,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
-    "type": "Blouse",
-    "image": "/static/media/product_3.be48863df18b272b8f59.png",
+    "type": "Dress",
+    "image": "/static/media/p_3.51e4f1d0ed8c9e4d09f6.png",
     "new_price": 60,
     "old_price": 100.5,
     "filters": {
@@ -113,14 +117,16 @@ const product_availability = [
         "comment": "Comfortable fit."
       }
     ],
-    "isAvailable": true
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 4,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
-    "type": "Blouse",
-    "image": "/static/media/product_4.ea0420ca9cec08d6df05.png",
+    "type": "Dress",
+    "image": "/static/media/p_4.9029af736f6c3e797200.png",
     "new_price": 100,
     "old_price": 150,
     "filters": {
@@ -152,14 +158,16 @@ const product_availability = [
         "comment": "Soft fabric!"
       }
     ],
-    "isAvailable": true
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 5,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
-    "type": "Blouse",
-    "image": "/static/media/product_5.437deb074cfe97900c5e.png",
+    "type": "Dress",
+    "image": "/static/media/p_5.525af17f8da7f6ce1ef6.png",
     "new_price": 85,
     "old_price": 120.5,
     "filters": {
@@ -190,14 +198,16 @@ const product_availability = [
         "comment": "Good quality!"
       }
     ],
-    "isAvailable": true
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 6,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
     "type": "Blouse",
-    "image": "/static/media/product_6.4b286399a637c5992ccb.png",
+    "image": "/static/media/p_6.47bfe42b404a2c5bbc55.png",
     "new_price": 85,
     "old_price": 120.5,
     "filters": {
@@ -227,14 +237,16 @@ const product_availability = [
         "comment": "I wear this all the time!"
       }
     ],
-    "isAvailable": true
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 7,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
     "type": "Blouse",
-    "image": "/static/media/product_7.004329923d4e6d2e4f9e.png",
+    "image": "/static/media/p_7.856266752f1ef3e83661.png",
     "new_price": 85,
     "old_price": 120.5,
     "filters": {
@@ -266,14 +278,16 @@ const product_availability = [
         "comment": "Love the colors."
       }
     ],
-    "isAvailable": true
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 8,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
     "type": "Blouse",
-    "image": "/static/media/product_8.2cf4747c23b5e634072c.png",
+    "image": "/static/media/p_8.e1301f7ec3bbb7865c35.png",
     "new_price": 85,
     "old_price": 120.5,
     "filters": {
@@ -304,14 +318,16 @@ const product_availability = [
         "comment": "A bit too tight for me."
       }
     ],
-    "isAvailable": true
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 9,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
     "type": "Blouse",
-    "image": "/static/media/product_9.c801212aa3bed83e7572.png",
+    "image": "/static/media/p_9.9077fed9e2fbb26ffadb.png",
     "new_price": 85,
     "old_price": 120.5,
     "filters": {
@@ -342,14 +358,16 @@ const product_availability = [
         "comment": "Good quality but too big for me."
       }
     ],
-    "isAvailable": true
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 10,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
     "type": "Blouse",
-    "image": "/static/media/product_10.97116f3af7f5e2000feb.png",
+    "image": "/static/media/p_10.1b227a589db03c8b64b2.png",
     "new_price": 85,
     "old_price": 120.5,
     "filters": {
@@ -381,14 +399,16 @@ const product_availability = [
         "comment": "Stylish and trendy."
       }
     ],
-    "isAvailable": true
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 11,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
-    "type": "Blouse",
-    "image": "/static/media/product_11.e26400d274dc5b02d79d.png",
+    "type": "Skirt",
+    "image": "/static/media/p_11.d00243e37cf81b5d49b1.png",
     "new_price": 85,
     "old_price": 120.5,
     "filters": {
@@ -419,14 +439,17 @@ const product_availability = [
         "user": "Sophia",
         "comment": "Perfect fit!"
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 12,
     "name": "Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     "category": "women",
-    "type": "Blouse",
-    "image": "/static/media/product_12.f0cbe3b14beeee568f3a.png",
+    "type": "Skirt",
+    "image": "/static/media/p_12.0b27857e3b5a404bc41e.png",
     "new_price": 85,
     "old_price": 120.5,
     "filters": {
@@ -456,7 +479,10 @@ const product_availability = [
         "user": "James",
         "comment": "Nice design, but too tight."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": true,
+    "popular": false
   },
   {
     "id": 13,
@@ -492,7 +518,9 @@ const product_availability = [
         "user": "Adam",
         "comment": "Good quality jacket."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 14,
@@ -529,7 +557,9 @@ const product_availability = [
         "user": "Nash",
         "comment": "Good for the winter season."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 15,
@@ -566,7 +596,9 @@ const product_availability = [
         "user": "John",
         "comment": "Perfect for cold weather."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 16,
@@ -602,7 +634,9 @@ const product_availability = [
         "user": "Ethan",
         "comment": "Exactly what I was looking for."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 17,
@@ -637,7 +671,9 @@ const product_availability = [
         "user": "Mike",
         "comment": "Fits like a glove."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 18,
@@ -673,7 +709,9 @@ const product_availability = [
         "user": "David",
         "comment": "A bit snug, but works well."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 19,
@@ -709,7 +747,9 @@ const product_availability = [
         "user": "Lucas",
         "comment": "Perfect for fall weather."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 20,
@@ -745,7 +785,9 @@ const product_availability = [
         "user": "John",
         "comment": "Great for layering."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 21,
@@ -783,7 +825,9 @@ const product_availability = [
         "user": "David",
         "comment": "Great for colder weather."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 22,
@@ -820,7 +864,9 @@ const product_availability = [
         "user": "Alex",
         "comment": "Perfect for casual outings."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 23,
@@ -856,7 +902,9 @@ const product_availability = [
         "user": "Ryan",
         "comment": "Good quality and looks great."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 24,
@@ -892,7 +940,9 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 25,
@@ -928,7 +978,9 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 26,
@@ -964,7 +1016,9 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 27,
@@ -1000,7 +1054,9 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 28,
@@ -1036,7 +1092,9 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 29,
@@ -1072,7 +1130,9 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 30,
@@ -1108,13 +1168,15 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 31,
     "name": "Boys Orange Colourblocked Hooded Sweatshirt",
     "category": "kid",
-    "type": "Sweetshirt",
+    "type": "Sweatshirt",
     "image": "/static/media/product_31.58eec6c742988bd7978b.png",
     "new_price": 85,
     "old_price": 120.5,
@@ -1144,13 +1206,15 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 32,
     "name": "Boys Orange Colourblocked Hooded Sweatshirt",
     "category": "kid",
-    "type": "Sweetshirt",
+    "type": "Sweatshirt",
     "image": "/static/media/product_32.25cb9f190076ae6e5f82.png",
     "new_price": 85,
     "old_price": 120.5,
@@ -1180,13 +1244,15 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 33,
     "name": "Boys Orange Colourblocked Hooded Sweatshirt",
     "category": "kid",
-    "type": "Sweetshirt",
+    "type": "Sweatshirt",
     "image": "/static/media/product_33.c47ecb3dc9e1b1e31b67.png",
     "new_price": 85,
     "old_price": 120.5,
@@ -1216,13 +1282,15 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 34,
     "name": "Boys Orange Colourblocked Hooded Sweatshirt",
     "category": "kid",
-    "type": "Sweetshirt",
+    "type": "Sweatshirt",
     "image": "/static/media/product_34.a45cd22dd06d3497e6da.png",
     "new_price": 85,
     "old_price": 120.5,
@@ -1250,13 +1318,15 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 35,
     "name": "Boys Orange Colourblocked Hooded Sweatshirt",
     "category": "kid",
-    "type": "Sweetshirt",
+    "type": "Sweatshirt",
     "image": "/static/media/product_35.073b8b5de77cfc979821.png",
     "new_price": 85,
     "old_price": 120.5,
@@ -1284,13 +1354,15 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   },
   {
     "id": 36,
     "name": "Boys Orange Colourblocked Hooded Sweatshirt",
     "category": "kid",
-    "type": "Sweetshirt",
+    "type": "Sweatshirt",
     "image": "/static/media/product_36.6592eda4649e6a076c66.png",
     "new_price": 85,
     "old_price": 120.5,
@@ -1318,7 +1390,9 @@ const product_availability = [
         "user": "Jack",
         "comment": "Comfortable and stylish."
       }
-    ]
+    ],
+    "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "popular": false
   }
 ];
 export default product_availability;

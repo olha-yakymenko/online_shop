@@ -1,11 +1,8 @@
-
-
 import React, { useReducer, useState, useCallback } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from 'react-query';
 import all_product from "../Assets/all_product";
-// Reducer do zarządzania stanem
 const formReducer = (state, action) => {
   switch (action.type) {
     case "NEXT_STEP":
@@ -19,7 +16,6 @@ const formReducer = (state, action) => {
   }
 };
 
-// Początkowy stan
 const initialState = {
   step: 1,
 };
@@ -77,10 +73,10 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
       }).then(res => {
         if (!res.ok) {
           return res.text().then(text => {
-            throw new Error(text); // Jeśli nie jest JSON, zwróć tekst
+            throw new Error(text); 
           });
         }
-        return res.json(); // Jeśli jest JSON, sparsuj
+        return res.json(); 
       }),
     {
       onSuccess: async () => {
@@ -90,7 +86,7 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
         queryClient.invalidateQueries('cart');
       },
       onError: (error) => {
-        alert(error.message); // Wyświetl błąd
+        alert(error.message); 
       },
       onSettled: () => {
         setLoading(false);
@@ -102,7 +98,6 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
   const handleSubmit = async (values) => {
     setLoading(true);
   
-    // Prepare the cartItems data
     const cartItemsData = Object.keys(cartItems).map((productId) => {
       const product = all_product.find((prod) => prod.id === Number(productId)); // Ensure correct data
       return {
@@ -113,7 +108,6 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
     });
   
     try {
-      // 1. First, send the confirmation email
       const emailResponse = await fetch('http://localhost:5055/send-confirmation', {
         method: 'POST',
         headers: {
@@ -132,7 +126,6 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
         throw new Error(errorMessage);
       }
   
-      // 2. Then, submit the order data to save it in the file
       const orderResponse = await fetch('http://localhost:5055/submit-order', {
         method: 'POST',
         headers: {
@@ -152,7 +145,6 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
         throw new Error(errorMessage);
       }
   
-      // Order and email sent successfully
       alert('Order successfully placed and confirmation email sent!');
       await clearCart();
       dispatch({ type: 'RESET' });

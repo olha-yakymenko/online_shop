@@ -131,7 +131,13 @@
     background-color: #ceffaa;
     color: #000;
 }
+.product-types{
+    margin-left: 20px;
+}
 
+.search-results-sort{
+    margin-left: 20px;
+}
 
 @media (max-width: 1024px) {
     .shopcategory-products {

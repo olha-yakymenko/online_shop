@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import all_product from '../Assets/all_product';
 import product_availability from '../Assets/availibility';
-const saveProductsToServer = (products) => {
+import './Admin.css';
 
+const saveProductsToServer = (products) => {
   fetch('http://localhost:5055/save-products', {
     method: 'POST',
     headers: {
@@ -32,7 +33,8 @@ const ProductList = () => {
       const availability = product_availability.find(avail => avail.id === product.id);
       return {
         ...product,
-        isAvailable: availability ? availability.isAvailable : false, // Domyślnie niedostępny, jeśli brak danych
+        isAvailable: availability ? availability.isAvailable : false, 
+        popular: product.popular || false, 
       };
     });
 
@@ -46,13 +48,23 @@ const ProductList = () => {
         : product
     );
     setProducts(updatedProducts);
-    saveProductsToServer(updatedProducts); 
+    saveProductsToServer(updatedProducts);
+  };
+
+  const togglePopularity = (id) => {
+    const updatedProducts = products.map(product =>
+      product.id === id
+        ? { ...product, popular: !product.popular }
+        : product
+    );
+    setProducts(updatedProducts);
+    saveProductsToServer(updatedProducts);
   };
 
   const deleteProduct = (id) => {
     const updatedProducts = products.filter(product => product.id !== id);
     setProducts(updatedProducts);
-    saveProductsToServer(updatedProducts); 
+    saveProductsToServer(updatedProducts);
   };
 
   return (
@@ -64,6 +76,7 @@ const ProductList = () => {
             <th>ID</th>
             <th>Nazwa</th>
             <th>Status dostępności</th>
+            <th>Popularność</th>
             <th>Akcja</th>
           </tr>
         </thead>
@@ -73,9 +86,13 @@ const ProductList = () => {
               <td>{product.id}</td>
               <td>{product.name}</td>
               <td>{product.isAvailable ? 'Dostępny' : 'Niedostępny'}</td>
+              <td>{product.popular ? 'Popularny' : 'Niepopularny'}</td>
               <td>
                 <button onClick={() => toggleAvailability(product.id)}>
                   {product.isAvailable ? 'Zmień na niedostępny' : 'Zmień na dostępny'}
+                </button>
+                <button onClick={() => togglePopularity(product.id)} style={{ marginLeft: '10px' }}>
+                  {product.popular ? 'Usuń popularność' : 'Ustaw jako popularny'}
                 </button>
                 <button onClick={() => deleteProduct(product.id)} style={{ marginLeft: '10px' }}>
                   Usuń
