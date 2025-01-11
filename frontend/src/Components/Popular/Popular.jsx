@@ -10,19 +10,18 @@ const Popular = () => {
             return {
                 ...item,
                 isAvailable: availability ? availability.isAvailable : false,
+                popular: availability ? availability.popular : false,
+
             };
         })
-        .filter((item) => item.isAvailable);
-
+        .filter((item) => item.isAvailable && item.popular);
     return (
         <div className="popular">
         <h1>POPULAR IN WOMEN</h1>
         <hr />
         <div className="popular-item">
             {cat_product.map((item, i) =>{
-                if (item.id%5===0){
-                    return <Item key={i} id={item.id} name={item.name} image={item.image} new_price={item.new_price} old_price={item.old_price}/>
-                }
+                return <Item key={i} id={item.id} name={item.name} image={item.image} new_price={item.new_price} old_price={item.old_price}/>
             })}
         </div>
         </div>

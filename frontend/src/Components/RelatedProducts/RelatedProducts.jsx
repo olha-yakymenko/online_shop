@@ -1,13 +1,21 @@
-
 import React from 'react';
 import './RelatedProducts.css';
-import all_product from '../Assets/all_product'; 
+import all_product from '../Assets/all_product';
+import product_availability from '../Assets/availibility';
 import Item from '../Item/Item';
 
 const RelatedProducts = (props) => {
     const { product } = props;
-    const currentProduct = all_product.find(item => item.id === product.id);
-
+    const cat_product = all_product
+        .map((item) => {
+            const availability = product_availability.find((avail) => avail.id === item.id);
+            return {
+                ...item,
+                isAvailable: availability ? availability.isAvailable : false,
+            };
+        })
+        .filter((item) => item.isAvailable);
+    const currentProduct = cat_product.find(item => item.id === product.id);
     if (!currentProduct) {
         return <div>Produkt nie znaleziony</div>;
     }

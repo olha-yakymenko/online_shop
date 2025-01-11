@@ -37,8 +37,9 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": false,
-    "popular": true
+    "isAvailable": true,
+    "popular": true,
+    "new": false
   },
   {
     "id": 2,
@@ -79,7 +80,8 @@ const product_availability = [
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
     "isAvailable": true,
-    "popular": false
+    "popular": true,
+    "new": true
   },
   {
     "id": 3,
@@ -118,8 +120,9 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": true,
-    "popular": false
+    "isAvailable": false,
+    "popular": false,
+    "new": true
   },
   {
     "id": 4,
@@ -159,7 +162,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": true,
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -199,7 +202,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": true,
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -238,7 +241,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": true,
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -279,7 +282,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": true,
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -319,7 +322,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": true,
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -359,7 +362,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": true,
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -400,7 +403,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": true,
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -441,7 +444,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": true,
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -481,7 +484,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
-    "isAvailable": true,
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -520,6 +523,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -559,6 +563,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -598,6 +603,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -636,6 +642,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -673,6 +680,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -711,6 +719,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -749,6 +758,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -787,6 +797,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -827,6 +838,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -866,6 +878,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -904,6 +917,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -942,6 +956,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -980,6 +995,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1018,6 +1034,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1056,6 +1073,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1094,6 +1112,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1132,6 +1151,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1170,6 +1190,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1208,6 +1229,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1246,6 +1268,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1284,6 +1307,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1320,6 +1344,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1356,6 +1381,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   },
   {
@@ -1392,6 +1418,7 @@ const product_availability = [
       }
     ],
     "description": "Stylish and comfortable apparel that combines modern design with high-quality materials. This item is crafted with both comfort and elegance in mind, perfect for everyday wear or special occasions. Thanks to carefully selected fabrics, the garment offers not only comfort but also durability and resistance to everyday use. Choose this product to feel confident and fashionable, no matter the occasion.",
+    "isAvailable": false,
     "popular": false
   }
 ];
