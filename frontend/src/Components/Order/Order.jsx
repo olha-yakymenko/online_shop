@@ -3,6 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from 'react-query';
 import all_product from "../Assets/all_product";
+import './Order.css'
+
 const formReducer = (state, action) => {
   switch (action.type) {
     case "NEXT_STEP":
