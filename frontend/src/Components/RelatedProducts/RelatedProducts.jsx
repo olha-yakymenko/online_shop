@@ -23,7 +23,7 @@ const RelatedProducts = (props) => {
     const relatedProducts = all_product.filter(item => {
         return item.id !== currentProduct.id && 
                item.category === currentProduct.category && 
-               item.name.toLowerCase().includes(currentProduct.name.toLowerCase().split(' ')[0]); // Porównanie na podstawie pierwszego słowa w nazwie
+               item.name.toLowerCase().includes(currentProduct.name.toLowerCase().split(' ')[0]);
     }).slice(0, 4); 
 
     return (

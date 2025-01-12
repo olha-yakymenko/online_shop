@@ -3,7 +3,8 @@ import { ShopContext } from '../../Context/ShopContext';
 import { UserContext } from '../../Context/UserContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 import Order from '../Order/Order';
-import './CartItems.css'
+import './CartItems.css';
+
 const CartItems = () => {
     const { getTotalCartAmount, all_product, cartItems, removeFromCart, setCartItems } = useContext(ShopContext);
     const { user } = useContext(UserContext);
@@ -185,6 +186,68 @@ const CartItems = () => {
         setFinalTotal(updatedTotal);
     }, [discountedTotal, totalCartAmount]);
 
+    const clearCart = async () => {
+        if (!user) {
+            alert('You must be logged in to clear your cart');
+            return;
+        }
+        
+        const email = user.email; 
+        try {
+            const response = await fetch('http://localhost:5055/clear-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }), 
+            });
+  
+            const result = await response.json();
+  
+            if (response.ok) {
+                setCartItems({});  
+                alert(result.message); 
+            } else {
+                alert(result.message); 
+            }
+        } catch (error) {
+            console.error('Error clearing cart:', error);
+            alert('Error clearing cart');
+        }
+    };
+
+    const handleQuantityChange = (productId, newQuantity) => {
+        if (newQuantity < 1) {
+            alert("Quantity must be at least 1.");
+            return;
+        }
+    
+        const updatedCartItems = { ...cartItems, [productId]: newQuantity };
+    
+        setCartItems(updatedCartItems);
+    console.log("aa",productId)
+        if (user) {
+            const email = user.email;
+            fetch('http://localhost:5055/update-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, productId, quantity: newQuantity }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log("Cart updated successfully");
+                } else {
+                    console.log("Error updating cart", data.message);
+                }
+            })
+            .catch(error => console.error("Error updating cart:", error));
+        }
+    };
+    
+
     return (
         <div className="cartitems">
             <div className="cartitems-format-main">
@@ -203,14 +266,29 @@ const CartItems = () => {
                             <img src={e.image} alt="" className="carticon-product-icon" />
                             <p>{e.name}</p>
                             <p>${e.new_price}</p>
-                            <button className="cartitems-quantity">{cartItems[e.id]}</button>
-                            <p>${e.new_price * cartItems[e.id]}</p>
-                            <img className="cartitems-remove-icon" src={remove_icon} onClick={() => handleRemoveFromCart(e.id)} alt="" />
+    
+                            <input
+                                type="number"
+                                min="1"
+                                value={cartItems[e.id] || 1} 
+                                onChange={(event) => {
+                                    console.log(e.id);  
+                                    handleQuantityChange(e.id, parseInt(event.target.value)); 
+                                }}
+                            />
+                            <p>${e.new_price * (cartItems[e.id] || 1)}</p>
+                            <img
+                                className="cartitems-remove-icon"
+                                src={remove_icon}
+                                onClick={() => handleRemoveFromCart(e.id)}
+                                alt="Remove"
+                            />
                         </div>
                         <hr />
                     </div>
                 );
             })}
+    
             <div className="cartitems-down">
                 <div className="cartitems-total">
                     <h1>Cart Totals</h1>
@@ -228,14 +306,14 @@ const CartItems = () => {
                         <div className="cartitems-total-item">
                             <h3>Total</h3>
                             <h3>${finalTotal}</h3>
-                            {console.log("Final Total:", finalTotal)}
                         </div>
                     </div>
                     <div>
                         <button onClick={handleProceedToCheckout}>PROCEED TO CHECKOUT</button>
-                        {showOrder && <Order totalAmount={finalTotal} />}
+                        {showOrder && <Order totalAmount={finalTotal} clearCart={clearCart} cartItems={userCart} />}
                     </div>
                 </div>
+    
                 <div className="cartitems-promocode">
                     <p>If you have a promo code, enter it here</p>
                     <div className="cartitems-promobox">
@@ -244,9 +322,11 @@ const CartItems = () => {
                             placeholder="Promo code"
                             value={promoCode}
                             onChange={(e) => setPromoCode(e.target.value)}
-                            disabled={usedPromoCode} 
+                            disabled={usedPromoCode}
                         />
-                        <button onClick={handlePromoCodeSubmit} disabled={usedPromoCode}>Apply</button>
+                        <button onClick={handlePromoCodeSubmit} disabled={usedPromoCode}>
+                            Apply
+                        </button>
                     </div>
                     <div className="cartitems-promo-list">
                         {promoCodeError && <p style={{ color: 'red' }}>{promoCodeError}</p>}
@@ -265,7 +345,6 @@ const CartItems = () => {
             </div>
         </div>
     );
-};
+    };
 
 export default CartItems;
-

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './DescriptionBox.css';
 import { UserContext } from '../../Context/UserContext';
 
@@ -6,7 +6,21 @@ const DescriptionBox = ({ product }) => {
     const { user } = useContext(UserContext);
     const [activeTab, setActiveTab] = useState('description');
     const [newComment, setNewComment] = useState('');
-    const [comments, setComments] = useState(product.comments);
+    const [comments, setComments] = useState(product.comments || []);
+
+    const saveCommentsToLocalStorage = (comments) => {
+        localStorage.setItem(
+            `product_${product.id}_comments`,
+            JSON.stringify(comments)
+        );
+    };
+
+    useEffect(() => {
+        const storedComments = localStorage.getItem(`product_${product.id}_comments`);
+        if (storedComments) {
+            setComments(JSON.parse(storedComments));
+        }
+    }, [product.id]);
 
     const handleAddComment = () => {
         if (!user) {
@@ -21,12 +35,8 @@ const DescriptionBox = ({ product }) => {
             ];
 
             setComments(updatedComments);
-
-
-            localStorage.setItem(
-                `product_${product.id}`,
-                JSON.stringify({ ...product, comments: updatedComments })
-            );
+            
+            saveCommentsToLocalStorage(updatedComments);
 
             setNewComment('');
         } else {
@@ -75,7 +85,12 @@ const DescriptionBox = ({ product }) => {
                                 onChange={(e) => setNewComment(e.target.value)}
                                 placeholder="Add a comment..."
                             />
-                            <button onClick={handleAddComment}>Add Comment</button>
+                            <button
+                                onClick={handleAddComment}
+                                disabled={!newComment.trim()}
+                            >
+                                Add Comment
+                            </button>
                         </div>
                     ) : (
                         <p>You must be logged in to add a comment.</p>

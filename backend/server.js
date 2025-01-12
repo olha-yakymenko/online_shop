@@ -203,6 +203,43 @@ app.post('/add-to-cart', async (req, res) => {
   }
 });
 
+app.post('/update-cart', async (req, res) => {
+  const { email, productId, quantity } = req.body;
+console.log("ostalem", productId)
+  try {
+      const data = await fs.readFile(usersFilePath, 'utf8');
+      const users = JSON.parse(data);
+      const user = users.find(user => user.email === email);
+
+      if (!user) {
+        console.log("bals")
+          return res.status(404).json({ message: 'User not found' });
+          
+      }
+      if (!user.cart) {
+          user.cart = [];
+      }
+      console.log(productId)
+      const productInCart = user.cart.find(item => item.id === productId);
+
+      if (productInCart) {
+
+        console.log(productInCart)
+          productInCart.quantity = quantity;
+      } else {
+          user.cart.push({ id: productId, quantity: quantity });
+      }
+
+      await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2));
+      console.log("ok")
+      res.status(200).json({ message: 'Cart updated successfully' });
+  } catch (err) {
+      console.error('Error updating cart:', err);
+      res.status(500).json({ message: 'Error processing request' });
+  }
+});
+
+
 
 app.post('/remove-from-cart', async (req, res) => {
   const { email, productId } = req.body; 

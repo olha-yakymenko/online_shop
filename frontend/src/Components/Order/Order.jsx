@@ -93,19 +93,19 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
       }
     }
   );
-  
-
   const handleSubmit = async (values) => {
     setLoading(true);
   
-    const cartItemsData = Object.keys(cartItems).map((productId) => {
-      const product = all_product.find((prod) => prod.id === Number(productId)); // Ensure correct data
-      return {
-        name: product.name,
-        quantity: cartItems[productId],
-        price: product.new_price,
-      };
-    });
+    const cartItemsData = (cartItems && typeof cartItems === 'object') 
+      ? Object.keys(cartItems).map((productId) => {
+          const product = all_product.find((prod) => prod.id === Number(productId));
+          return {
+            name: product.name,
+            quantity: cartItems[productId],
+            price: product.new_price,
+          };
+        })
+      : [];  
   
     try {
       const emailResponse = await fetch('http://localhost:5055/send-confirmation', {
@@ -145,18 +145,17 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
         throw new Error(errorMessage);
       }
   
-      alert('Order successfully placed and confirmation email sent!');
+      alert('Zamówienie zostało pomyślnie złożone, wysłano potwierdzenie!');
       await clearCart();
       dispatch({ type: 'RESET' });
       queryClient.invalidateQueries('cart');
     } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred: ' + error.message);
+      console.error('Błąd:', error);
+      alert('Wystąpił błąd: ' + error.message);
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
     <Formik

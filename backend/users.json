@@ -5,12 +5,7 @@
     "email": "jan.kowalski@example.com",
     "password": "$2b$10$B4nloElIQNksivE1bjwN2.9/3vaNKBux85TMv2Cxzf1b4vIqTEVO6",
     "isAuthenticated": true,
-    "cart": [
-      {
-        "id": 1,
-        "quantity": 1
-      }
-    ],
+    "cart": [],
     "role": "user",
     "sale": []
   },

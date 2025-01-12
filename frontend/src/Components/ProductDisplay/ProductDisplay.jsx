@@ -1,10 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import './ProductDisplay.css';
 import star_icon from '../Assets/star_icon.png';
 import star_dull_icon from '../Assets/star_dull_icon.png';
 import { ShopContext } from '../../Context/ShopContext';
 import { UserContext } from '../../Context/UserContext';
-import product_availability from '../Assets/availibility';
 
 const ProductDisplay = (props) => {
     const { product } = props;
@@ -13,20 +12,14 @@ const ProductDisplay = (props) => {
 
     const [userRating, setUserRating] = useState(0);
     const [likes, setLikes] = useState(product?.likes || []);
-    const [averageRating, setAverageRating] = useState(0);
 
-    useEffect(() => {
+    const averageRating = useMemo(() => {
         if (likes.length > 0) {
-            const avgRating = (
-                likes.reduce((acc, curr) => acc + curr, 0) / likes.length
-            ).toFixed(1);
-            console.log('Average Rating:', avgRating); 
-            setAverageRating(avgRating);
-        } else {
-            setAverageRating(0);
+            const avgRating = (likes.reduce((acc, curr) => acc + curr, 0) / likes.length).toFixed(1);
+            return avgRating;
         }
+        return 0;
     }, [likes]);
-    
 
     const handleRatingChange = (rating) => {
         if (!user) {
@@ -38,7 +31,7 @@ const ProductDisplay = (props) => {
         setLikes((prevLikes) => [...prevLikes.slice(0, -1), rating]);
     };
 
-    const handleAddToCart = async () => {
+    const handleAddToCart = useCallback(async () => {
         if (!user) {
             alert('You must be logged in to add products to the cart');
             return;
@@ -65,20 +58,19 @@ const ProductDisplay = (props) => {
             console.error('Error adding product to cart:', error);
             alert('Error adding product to cart');
         }
-    };
+    }, [user, product, addToCart]);
 
     return (
         <div className="productdisplay">
             <div className="productdisplay-left">
                 <div className="productdisplay-img-list">
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
+                    {Array(4).fill(null).map((_, index) => (
+                        <img key={index} src={product.image} alt={`img-${index}`} />
+                    ))}
                 </div>
             </div>
             <div className="productdisplay-image">
-                <img className="productdisplay-main-img" src={product.image} alt="" />
+                <img className="productdisplay-main-img" src={product.image} alt="main product" />
             </div>
             <div className="productdisplay-right">
                 <h1>{product.name}</h1>
@@ -91,7 +83,7 @@ const ProductDisplay = (props) => {
                             alt="star"
                         />
                     ))}
-                    <p>Average rating: {averageRating} </p>
+                    <p>Average rating: {averageRating}</p>
                 </div>
 
                 <div className="productdisplay-rate">
@@ -120,11 +112,9 @@ const ProductDisplay = (props) => {
                 <div className="productdisplay-right-size">
                     <h1>Select Size</h1>
                     <div className="productdisplay-right-sizes">
-                        <div>S</div>
-                        <div>M</div>
-                        <div>L</div>
-                        <div>XL</div>
-                        <div>XXL</div>
+                        {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                            <div key={size}>{size}</div>
+                        ))}
                     </div>
                 </div>
                 <button onClick={handleAddToCart}>ADD TO CART</button>
@@ -140,4 +130,3 @@ const ProductDisplay = (props) => {
 };
 
 export default ProductDisplay;
-

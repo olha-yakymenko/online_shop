@@ -30,14 +30,18 @@ const ShopContextProvider = (props) => {
 
   const getTotalCartAmount = () => {
     return Object.keys(cartItems)
-      .reduce((totalAmount, item) => {
-        if (cartItems[item] > 0) {
-          const itemInfo = all_product.find((product) => product.id === Number(item));
-          return totalAmount + itemInfo.new_price * cartItems[item];
-        }
-        return totalAmount;
-      }, 0);
-  };
+        .reduce((totalAmount, item) => {
+            if (cartItems[item] > 0) {
+                const itemInfo = all_product.find((product) => product.id === Number(item));
+                
+                if (itemInfo && itemInfo.new_price) {
+                    return totalAmount + itemInfo.new_price * cartItems[item];
+                }
+            }
+            return totalAmount;
+        }, 0);
+};
+
 
   const getTotalCartItems = () => {
     return Object.keys(cartItems)
