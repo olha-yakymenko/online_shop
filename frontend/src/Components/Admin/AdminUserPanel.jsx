@@ -1,96 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import useUsers from './hooks/useUsers';
+import useMessageHandler from './hooks/useMessageHandler';
 
 const AdminUserPanel = () => {
-  const [users, setUsers] = useState([]);
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  const { users, addSaleCode, removeSaleCode, removeUser, fetchSaleCodes } = useUsers();
+  const { message, error, setMessage, setError } = useMessageHandler();
+  
+  const [codes, setCodes] = useState({});
 
-  const fetchUsers = async () => {
+  const loadSaleCodes = async (email) => {
     try {
-      const response = await fetch('http://localhost:5055/get-users');
-      const data = await response.json();
-      setUsers(data);
+      console.log(email)
+      const saleCodes =  await fetchSaleCodes(email);
+      console.log(saleCodes)
+      setCodes((prevCodes) => ({ ...prevCodes, [email]: saleCodes }));
     } catch (err) {
-      console.error("Error fetching users:", err);
-      setError("Failed to fetch users.");
-    }
-  };
-
-  const addSaleCode = async (email) => {
-    try {
-      const response = await fetch('http://localhost:5055/add-sale-code', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage(`Sale code added for ${email}: ${data.saleCode}`);
-        fetchUsers();  
-      } else {
-        setError(data.message || 'Failed to add sale code.');
-      }
-    } catch (err) {
-      console.error("Error adding sale code:", err);
-      setError("Failed to add sale code.");
-    }
-  };
-
-  const removeSaleCode = async (email, saleCode) => {
-    try {
-      const response = await fetch('http://localhost:5055/remove-sale-code', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, saleCode })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage(`Sale code ${saleCode} removed for ${email}`);
-        fetchUsers();  
-      } else {
-        setError(data.message || 'Failed to remove sale code.');
-      }
-    } catch (err) {
-      console.error("Error removing sale code:", err);
-      setError("Failed to remove sale code.");
-    }
-  };
-
-  const removeUser = async (email) => {
-    try {
-      const response = await fetch('http://localhost:5055/remove-user', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage(`User ${email} removed`);
-        fetchUsers();  
-      } else {
-        setError(data.message || 'Failed to remove user.');
-      }
-    } catch (err) {
-      console.error("Error removing user:", err);
-      setError("Failed to remove user.");
+      setError('Failed to load sale codes');
     }
   };
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    users.forEach((user) => {
+      loadSaleCodes(user.email);
+    });
+  }, [users]); 
 
   return (
     <div className="admin-panel">
@@ -117,11 +50,13 @@ const AdminUserPanel = () => {
                 <td>{user.lastName}</td>
                 <td>
                   <ul>
-                    {user.sale && user.sale.length > 0 ? (
-                      user.sale.map((code, index) => (
+                    {codes[user.email] && codes[user.email].length > 0 ? (
+                      codes[user.email].map((code, index) => (
                         <li key={index}>
                           {code}{" "}
-                          <button onClick={() => removeSaleCode(user.email, code)}>Remove</button>
+                          <button onClick={() => removeSaleCode(user.email, code)}>
+                            Remove
+                          </button>
                         </li>
                       ))
                     ) : (
@@ -131,7 +66,7 @@ const AdminUserPanel = () => {
                 </td>
                 <td>
                   <button onClick={() => addSaleCode(user.email)}>Add Sale Code</button>
-                  <button onClick={() => removeUser(user.email)} style={{ marginLeft: '10px' }}>
+                  <button onClick={() => removeUser(user.email)} style={{ color: 'white' }}>
                     Remove User
                   </button>
                 </td>

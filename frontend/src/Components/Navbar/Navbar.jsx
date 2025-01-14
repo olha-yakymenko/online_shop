@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useLayoutEffect } from 'react';
 import './Navbar.css';
 import logo from '../Assets/logo.png';
 import cart_icon from '../Assets/cart_icon.png';
@@ -8,9 +8,25 @@ import Search from '../Search/Search';
 
 const Navbar = () => {
   const [menu, setMenu] = useState("shop");
+  const [isMobile, setIsMobile] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); 
   const { user, logoutUser } = useContext(UserContext);
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      console.log(window.innerWidth)
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -21,14 +37,14 @@ const Navbar = () => {
       setMenu("womens");
     } else if (location.pathname === '/kids') {
       setMenu("kids");
-    }else{
-      setMenu(null)
+    } else {
+      setMenu(null);
     }
   }, [location]);
 
   const handleLogout = () => {
-    logoutUser(); 
-    navigate('/'); 
+    logoutUser();
+    navigate('/');
   };
 
   return (
@@ -37,24 +53,49 @@ const Navbar = () => {
         <img src={logo} alt="logo" />
         <p>YAK</p>
       </div>
-      <ul className="nav-menu">
-        <li onClick={() => setMenu("shop")}>
-          <Link style={{ textDecoration: 'none' }} to='/'>Shop</Link>
-          {menu === 'shop' ? <hr /> : null}
-        </li>
-        <li onClick={() => setMenu("mens")}>
-          <Link style={{ textDecoration: 'none' }} to='/mens'>Men</Link>
-          {menu === 'mens' ? <hr /> : null}
-        </li>
-        <li onClick={() => setMenu("womens")}>
-          <Link style={{ textDecoration: 'none' }} to='/womens'>Women</Link>
-          {menu === 'womens' ? <hr /> : null}
-        </li>
-        <li onClick={() => setMenu("kids")}>
-          <Link style={{ textDecoration: 'none' }} to='/kids'>Kids</Link>
-          {menu === 'kids' ? <hr /> : null}
-        </li>
-      </ul>
+
+      {isMobile ? (
+        <div className="burger-menu">
+          <button onClick={() => setMenuOpen(!menuOpen)}>
+            ☰ 
+          </button>
+          {menuOpen && (
+            <ul className="nav-menu-mobile">
+              <li onClick={() => setMenu("shop")}>
+                <Link to='/'>Shop</Link>
+              </li>
+              <li onClick={() => setMenu("mens")}>
+                <Link to='/mens'>Men</Link>
+              </li>
+              <li onClick={() => setMenu("womens")}>
+                <Link to='/womens'>Women</Link>
+              </li>
+              <li onClick={() => setMenu("kids")}>
+                <Link to='/kids'>Kids</Link>
+              </li>
+            </ul>
+          )}
+        </div>
+      ) : (
+        <ul className="nav-menu">
+          <li onClick={() => setMenu("shop")}>
+            <Link style={{ textDecoration: 'none' }} to='/'>Shop</Link>
+            {menu === 'shop' ? <hr /> : null}
+          </li>
+          <li onClick={() => setMenu("mens")}>
+            <Link style={{ textDecoration: 'none' }} to='/mens'>Men</Link>
+            {menu === 'mens' ? <hr /> : null}
+          </li>
+          <li onClick={() => setMenu("womens")}>
+            <Link style={{ textDecoration: 'none' }} to='/womens'>Women</Link>
+            {menu === 'womens' ? <hr /> : null}
+          </li>
+          <li onClick={() => setMenu("kids")}>
+            <Link style={{ textDecoration: 'none' }} to='/kids'>Kids</Link>
+            {menu === 'kids' ? <hr /> : null}
+          </li>
+        </ul>
+      )}
 
       <Search />
 

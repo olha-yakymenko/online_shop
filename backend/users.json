@@ -7,9 +7,7 @@
     "isAuthenticated": true,
     "cart": [],
     "role": "user",
-    "sale": [
-      "855367"
-    ]
+    "sale": []
   },
   {
     "firstName": "Jan",

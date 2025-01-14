@@ -112,13 +112,13 @@ const ProductList = () => {
                 <button onClick={() => toggleAvailability(product.id)} >
                   {product.isAvailable ? 'Zmień na niedostępny' : 'Zmień na dostępny'}
                 </button>
-                <button onClick={() => togglePopularity(product.id)} style={{ color: 'red' }}>
+                <button onClick={() => togglePopularity(product.id)} style={{ color: 'white' }}>
                   {product.popular ? 'Usuń popularność' : 'Ustaw jako popularny'}
                 </button>
-                <button onClick={() => toggleNew(product.id)} style={{ marginLeft: '10px' }}>
+                <button onClick={() => toggleNew(product.id)} style={{ color: 'white' }}>
                   {product.new ? 'Zmien (nie nowy)' : 'Oznacz jako nowy'}
                 </button>
-                <button onClick={() => deleteProduct(product.id)} style={{ marginLeft: '10px' }}>
+                <button onClick={() => deleteProduct(product.id)} style={{ color: 'white' }}>
                   Usuń
                 </button>
               </td>

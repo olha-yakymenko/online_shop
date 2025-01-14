@@ -79,6 +79,29 @@
     color: white;
 }
 
+.burger-menu button{
+    background-color: inherit;
+    color:black;
+    outline: none;
+}
+.burger-menu button:hover {
+    background-color: inherit;
+    color: black;
+}
+
+
+.burger-menu ul{
+    background-color: inherit;
+    color:black;
+    outline: none;
+}
+
+.nav-menu-mobile li a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
 @media (max-width: 1200px) {
     .nav-logo p {
         font-size: 30px;

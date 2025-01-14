@@ -47,7 +47,7 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
   const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
   const [message, setMessage] = useState({ text: '', type: '' });
-
+console.log("CART", cartItems)
 
   const handleNextStep = useCallback(
     (values, validateForm) => {
@@ -104,6 +104,7 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
     const cartItemsData = (cartItems && typeof cartItems === 'object') 
       ? Object.keys(cartItems).map((productId) => {
           const product = all_product.find((prod) => prod.id === Number(productId));
+          console.log(product)
           return {
             name: product.name,
             quantity: cartItems[productId],
