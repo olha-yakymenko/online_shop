@@ -124,8 +124,7 @@
     background: #333;
 }
 
-/* Stylizacja dla ekranów średniej wielkości (tablet) */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .cartitems {
         margin: 50px 40px;
     }
@@ -169,7 +168,6 @@
     }
 }
 
-/* Stylizacja dla małych ekranów (smartfony) */
 @media (max-width: 480px) {
     .cartitems {
         margin: 20px 10px;
@@ -271,6 +269,25 @@
 
 .cartitems-promo-list p[style*="color: red"] {
     color: red !important;
+}
+
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.message.message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
 

@@ -7,7 +7,9 @@
     "isAuthenticated": true,
     "cart": [],
     "role": "user",
-    "sale": []
+    "sale": [
+      "855367"
+    ]
   },
   {
     "firstName": "Jan",
@@ -17,5 +19,15 @@
     "isAuthenticated": true,
     "cart": [],
     "role": "admin"
+  },
+  {
+    "firstName": "Olha",
+    "lastName": "Yakymenko",
+    "email": "o.yakymenko.450@studms.ug.edu.pl",
+    "password": "$2b$10$L7m9uOKHq2hZHTsJisCVb.JTtWMq6e/gEM8VF4wizwfLGhSqU9V2K",
+    "isAuthenticated": true,
+    "cart": [],
+    "sale": [],
+    "role": "user"
   }
 ]

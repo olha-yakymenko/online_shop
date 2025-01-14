@@ -9,7 +9,7 @@ const ProductDisplay = (props) => {
     const { product } = props;
     const { addToCart } = useContext(ShopContext);
     const { user } = useContext(UserContext);
-
+    const [message, setMessage] = useState({ text: '', type: '' });
     const [userRating, setUserRating] = useState(0);
     const [likes, setLikes] = useState(product?.likes || []);
 
@@ -23,7 +23,7 @@ const ProductDisplay = (props) => {
 
     const handleRatingChange = (rating) => {
         if (!user) {
-            alert('You must be logged in to rate products');
+            setMessage({ text: 'You must be logged in to rate products', type: 'message' });
             return;
         }
 
@@ -33,7 +33,7 @@ const ProductDisplay = (props) => {
 
     const handleAddToCart = useCallback(async () => {
         if (!user) {
-            alert('You must be logged in to add products to the cart');
+            setMessage({ text: 'You must be logged in to add products to the cart', type: 'message' });
             return;
         }
 
@@ -50,18 +50,18 @@ const ProductDisplay = (props) => {
 
             if (response.ok) {
                 addToCart(product);
-                alert(result.message);
-            } else {
-                alert(result.message);
-            }
+                setMessage({ text: result.message, type: 'message' });
+            } 
         } catch (error) {
             console.error('Error adding product to cart:', error);
-            alert('Error adding product to cart');
+            setMessage({ text: 'Error adding product to cart', type: 'error' });
         }
     }, [user, product, addToCart]);
 
     return (
         <div className="productdisplay">
+           
+
             <div className="productdisplay-left">
                 <div className="productdisplay-img-list">
                     {Array(4).fill(null).map((_, index) => (
@@ -74,7 +74,11 @@ const ProductDisplay = (props) => {
             </div>
             <div className="productdisplay-right">
                 <h1>{product.name}</h1>
-
+                {message.text && (
+                <div className={`message ${message.type}`}>
+                    {message.text}
+                </div>
+            )}
                 <div className="productdisplay-right-star">
                     {[1, 2, 3, 4, 5].map((star) => (
                         <img

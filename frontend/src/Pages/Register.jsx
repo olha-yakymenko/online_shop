@@ -27,10 +27,10 @@ const Register = ({ switchToLogin }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
-
+  const [message, setMessage] = useState({ text: '', type: '' });
   const { mutate, isLoading, isError, error: queryError } = useMutation(registerUserApi, {
     onSuccess: () => {
-      alert('Registration successful!');
+      setMessage({ text: 'Registration successful!', type: 'message' });
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -47,13 +47,13 @@ const Register = ({ switchToLogin }) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords don't match!");
+      setMessage({ text: "Passwords don't match!", type: 'error' });
       return;
     }
 
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(password)) {
-      alert("Password must be at least 8 characters long and contain a letter and a number.");
+      setMessage({ text: "Password must be at least 8 characters long and contain a letter and a number.", type: 'error' });
       return;
     }
 
@@ -65,6 +65,12 @@ const Register = ({ switchToLogin }) => {
   return (
     <div className="loginsignup-container">
       <h1>Register</h1>
+      {message.text && (
+          <div className={`message ${message.type}`}>
+              {message.text}
+          </div>
+      )}
+
       <form onSubmit={handleRegister}>
         <div className="loginsignup-fields">
           <input

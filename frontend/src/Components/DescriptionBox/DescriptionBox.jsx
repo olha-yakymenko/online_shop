@@ -7,6 +7,7 @@ const DescriptionBox = ({ product }) => {
     const [activeTab, setActiveTab] = useState('description');
     const [newComment, setNewComment] = useState('');
     const [comments, setComments] = useState(product.comments || []);
+    const [message, setMessage] = useState({ text: '', type: '' });
 
     const saveCommentsToLocalStorage = (comments) => {
         localStorage.setItem(
@@ -24,7 +25,6 @@ const DescriptionBox = ({ product }) => {
 
     const handleAddComment = () => {
         if (!user) {
-            alert("You must be logged in to add a comment.");
             return;
         }
 
@@ -40,12 +40,17 @@ const DescriptionBox = ({ product }) => {
 
             setNewComment('');
         } else {
-            alert("Please provide a valid comment.");
+            setMessage({ text: "Please provide a valid comment.", type: 'message' });
         }
     };
 
     return (
         <div className="descriptionbox">
+            {message.text && (
+                <div className={`message ${message.type}`}>
+                    {message.text}
+                </div>
+            )}
             <div className="descriptionbox-navigator">
                 <div
                     className={`descriptionbox-nav-box ${activeTab === 'description' ? 'active' : ''}`}

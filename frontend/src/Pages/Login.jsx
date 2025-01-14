@@ -7,42 +7,10 @@ const Login = ({ switchToRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-
+  const [message, setMessage] = useState({ text: '', type: '' });
   const { loginUser } = useContext(UserContext);  
   const navigate = useNavigate();  
   const queryClient = useQueryClient(); 
-
-  // const mutation = useMutation(
-  //   async (userData) => {
-  //     const response = await fetch('http://localhost:5055/login', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(userData),
-  //     });
-  //     const result = await response.json();
-  //     if (!response.ok) {
-  //       throw new Error(result.message || 'Invalid credentials');
-  //     }
-  //     return result;
-  //   },
-  //   {
-  //     onSuccess: (result) => {
-  //       loginUser(result.user);
-  //       if (result.user.role === 'admin') {
-  //         alert('Admin login successful!');
-  //         navigate('/admin');  
-  //       } else {
-  //         alert('Login successful!');
-  //         navigate('/');  
-  //       }
-  //     },
-  //     onError: (error) => {
-  //       setError(error.message);
-  //     }
-  //   }
-  // );
 
   const mutation = useMutation(
     async (userData) => {
@@ -61,17 +29,14 @@ const Login = ({ switchToRegister }) => {
     },
     {
       onSuccess: (result) => {
-        // Zapisz użytkownika w localStorage
         localStorage.setItem('loggedUser', JSON.stringify(result.user));
-  
-        // Ustaw użytkownika w kontekście
         loginUser(result.user);
   
         if (result.user.role === 'admin') {
-          alert('Admin login successful!');
+          setMessage({ text: 'Admin login successful!', type: 'message' });
           navigate('/admin');
         } else {
-          alert('Login successful!');
+          setMessage({ text: 'Login successful!', type: 'message' });
           navigate('/');
         }
       },
@@ -97,6 +62,11 @@ const Login = ({ switchToRegister }) => {
   return (
     <div className="loginsignup-container">
       <h1>Login</h1>
+      {message.text && (
+            <div className={`message ${message.type}`}>
+                {message.text}
+            </div>
+        )}
       <form onSubmit={handleLogin}>
         <div className="loginsignup-fields">
           <input

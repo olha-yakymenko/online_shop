@@ -21,6 +21,8 @@ const Navbar = () => {
       setMenu("womens");
     } else if (location.pathname === '/kids') {
       setMenu("kids");
+    }else{
+      setMenu(null)
     }
   }, [location]);
 

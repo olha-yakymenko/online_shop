@@ -110,6 +110,7 @@
 }
 
 .type-button {
+    width:300px;
     font-size: 20px;
     padding: 10px 20px;
     margin: 5px;
@@ -136,10 +137,11 @@
 }
 
 .search-results-sort{
+    width:400px;
     margin-left: 20px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .shopcategory-products {
         grid-template-columns: repeat(3, 1fr);
     }

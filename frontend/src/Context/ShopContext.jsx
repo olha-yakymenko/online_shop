@@ -20,13 +20,12 @@ const ShopContextProvider = (props) => {
 
   const removeFromCart = (itemId) => {
     setCartItems((prev) => {
-      const currentQuantity = prev[itemId];
-      if (currentQuantity > 0) {
-        return { ...prev, [itemId]: currentQuantity - 1 };
-      }
-      return prev;
+        const updatedCart = { ...prev };
+        delete updatedCart[itemId];  
+        return updatedCart;
     });
-  };
+};
+
 
   const getTotalCartAmount = () => {
     return Object.keys(cartItems)
@@ -41,7 +40,6 @@ const ShopContextProvider = (props) => {
             return totalAmount;
         }, 0);
 };
-
 
   const getTotalCartItems = () => {
     return Object.keys(cartItems)

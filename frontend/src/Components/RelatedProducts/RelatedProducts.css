@@ -39,7 +39,7 @@
 
 @media (max-width: 768px) {
     .relatedproducts {
-        height: auto; /* Dopasowanie wysokości do zawartości */
+        height: auto; 
         padding: 20px;
     }
 

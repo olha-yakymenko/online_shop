@@ -9,16 +9,17 @@ const CartItems = () => {
     const { getTotalCartAmount, all_product, cartItems, removeFromCart, setCartItems } = useContext(ShopContext);
     const { user } = useContext(UserContext);
     const email = user?.email;
+    const [message, setMessage] = useState({ text: '', type: '' });
     const [userCart, setUserCart] = useState(cartItems);
     const [showOrder, setShowOrder] = useState(false);
     const [promoCode, setPromoCode] = useState("");
-    const [discountedTotal, setDiscountedTotal] = useState(null);
+    const [discountedTotal, setDiscountedTotal] = useState(false);
     const [availablePromoCodes, setAvailablePromoCodes] = useState([]);
     const [error, setError] = useState("");
     const [finalTotal, setFinalTotal] = useState(0); 
     const [usedPromoCode, setUsedPromoCode] = useState(false); 
     const [promoCodeError, setPromoCodeError] = useState("");
-
+    
     useEffect(() => {
         const fetchPromoCodes = async () => {
             try {
@@ -31,19 +32,14 @@ const CartItems = () => {
 
                 const data = await response.json();
                 if (response.ok) {
-                    setAvailablePromoCodes(data.saleCodes);
-                    if (data.saleCodes.length > 0) {
-                        const totalAmount = getTotalCartAmount();
-                        const discountedAmount = totalAmount * 0.5;
-                        setDiscountedTotal(discountedAmount);
-                    }
+                    const saleCodes = Array.isArray(data.saleCodes) ? data.saleCodes : [];
+                    setAvailablePromoCodes(saleCodes);
                 } else {
                     setError("Failed to fetch promo codes");
-                    alert("Failed to fetch promo codes");
+                    
                 }
             } catch (error) {
                 console.error("Error fetching promo codes:", error);
-                alert("Error fetching promo codes");
             }
         };
 
@@ -54,7 +50,7 @@ const CartItems = () => {
 
     const handlePromoCodeSubmit = async () => {
         if (promoCode === "") {
-            alert("Please enter a promo code.");
+            setMessage({text: "Please enter a promo code.", type: "message"});
             return;
         }
 
@@ -65,7 +61,7 @@ const CartItems = () => {
             }
 
             if (!user || !user.email) {
-                alert("You must be logged in to apply a promo code.");
+                setMessage({text: "You must be logged in to apply a promo code.", type: "message"});
                 return;
             }
 
@@ -83,22 +79,20 @@ const CartItems = () => {
                 const result = await response.json();
 
                 if (response.ok) {
-                    const discountedAmount = getTotalCartAmount() * 0.5;
-                    setDiscountedTotal(discountedAmount);
-                    alert("Promo code applied! You get a 50% discount.");
+                    const discountedAmount = true
+                    setDiscountedTotal(true)
+                    setMessage({ text: 'Promo code applied! You get a 50% discount.', type: 'message' });
                     setAvailablePromoCodes(availablePromoCodes.filter(code => code !== promoCode));
                     setUsedPromoCode(true);  
                     setPromoCodeError(""); 
                 } else {
-                    alert(result.message || "Error applying promo code.");
+                    setMessage({ text: result.message || "Error applying promo code", type: 'message' });
                 }
             } catch (error) {
                 console.error("Error applying promo code:", error);
-                alert("Error applying promo code");
             }
         } else {
             setPromoCodeError("Invalid promo code. The price will remain the same.");
-            setDiscountedTotal(null); 
         }
     };
 
@@ -126,12 +120,9 @@ const CartItems = () => {
                     }, {});
                     setUserCart(fetchedCart);
                     setCartItems(fetchedCart);
-                } else {
-                    alert(result.message);
-                }
+                } 
             } catch (error) {
                 console.error('Error fetching cart:', error);
-                alert('Error fetching cart');
             }
         };
 
@@ -140,7 +131,7 @@ const CartItems = () => {
 
     const handleRemoveFromCart = async (productId) => {
         if (!user) {
-            alert('You must be logged in to remove products from the cart');
+            setMessage({ text: 'You must be logged in to remove products from the cart', type: 'message' });
             return;
         }
 
@@ -159,36 +150,34 @@ const CartItems = () => {
 
             if (response.ok) {
                 removeFromCart(productId);
-                alert(result.message);
+                setMessage({ text: result.message, type: 'message' });
             } else {
-                alert(result.message);
+                setMessage({ text: result.message, type: 'error' });
             }
         } catch (error) {
             console.error('Error removing product from cart:', error);
-            alert('Error removing product from cart');
+            setMessage({ text: 'Error removing product from cart', type: 'message' });
         }
     };
 
     const handleProceedToCheckout = () => {
-        setShowOrder(true);
+        setShowOrder((prevState) => !prevState);
     };
 
     const filteredCartItems = useMemo(() => {
         return all_product.filter((product) => cartItems[product.id] > 0);
     }, [all_product, cartItems]);
 
-    const totalCartAmount = useMemo(() => {
-        return getTotalCartAmount();
-    }, [cartItems, getTotalCartAmount]);
+    const totalCartAmount = useMemo(() => getTotalCartAmount(), [cartItems, getTotalCartAmount]);
 
     useEffect(() => {
-        const updatedTotal = discountedTotal !== null ? discountedTotal : totalCartAmount;
+        const updatedTotal = discountedTotal  ? totalCartAmount*0.5 : totalCartAmount;
         setFinalTotal(updatedTotal);
     }, [discountedTotal, totalCartAmount]);
 
     const clearCart = async () => {
         if (!user) {
-            alert('You must be logged in to clear your cart');
+            setMessage({ text: 'You must be logged in to clear your cart', type: 'message' });
             return;
         }
         
@@ -206,26 +195,25 @@ const CartItems = () => {
   
             if (response.ok) {
                 setCartItems({});  
-                alert(result.message); 
+                setMessage({ text: result.message, type: 'message' }); 
             } else {
-                alert(result.message); 
+                setMessage({ text: result.message, type: 'error' }); 
             }
         } catch (error) {
             console.error('Error clearing cart:', error);
-            alert('Error clearing cart');
+            setMessage({ text: 'Error clearing cart', type: 'error' });
         }
     };
 
     const handleQuantityChange = (productId, newQuantity) => {
         if (newQuantity < 1) {
-            alert("Quantity must be at least 1.");
+            setMessage({ text: "Quantity must be at least 1.", type: 'message' });
             return;
         }
     
         const updatedCartItems = { ...cartItems, [productId]: newQuantity };
     
         setCartItems(updatedCartItems);
-    console.log("aa",productId)
         if (user) {
             const email = user.email;
             fetch('http://localhost:5055/update-cart', {
@@ -250,6 +238,7 @@ const CartItems = () => {
 
     return (
         <div className="cartitems">
+            
             <div className="cartitems-format-main">
                 <p>Products</p>
                 <p>Title</p>
@@ -290,6 +279,7 @@ const CartItems = () => {
             })}
     
             <div className="cartitems-down">
+            
                 <div className="cartitems-total">
                     <h1>Cart Totals</h1>
                     <div>
@@ -305,16 +295,23 @@ const CartItems = () => {
                         <hr />
                         <div className="cartitems-total-item">
                             <h3>Total</h3>
+                            {console.log(finalTotal)}
                             <h3>${finalTotal}</h3>
                         </div>
                     </div>
                     <div>
                         <button onClick={handleProceedToCheckout}>PROCEED TO CHECKOUT</button>
                         {showOrder && <Order totalAmount={finalTotal} clearCart={clearCart} cartItems={userCart} />}
+
                     </div>
                 </div>
     
                 <div className="cartitems-promocode">
+                    {message.text && (
+                        <div className={`message ${message.type}`}>
+                            {message.text}
+                        </div>
+                    )}
                     <p>If you have a promo code, enter it here</p>
                     <div className="cartitems-promobox">
                         <input

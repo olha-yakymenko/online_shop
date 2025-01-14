@@ -36,7 +36,9 @@ app.post('/register', async (req, res) => {
       email,
       password: hashedPassword,
       isAuthenticated: false,
-      cart: [],  
+      cart: [], 
+      sale: [],
+      role:'user' 
     };
 
     users.push(newUser);
@@ -205,7 +207,6 @@ app.post('/add-to-cart', async (req, res) => {
 
 app.post('/update-cart', async (req, res) => {
   const { email, productId, quantity } = req.body;
-console.log("ostalem", productId)
   try {
       const data = await fs.readFile(usersFilePath, 'utf8');
       const users = JSON.parse(data);
@@ -257,22 +258,17 @@ app.post('/remove-from-cart', async (req, res) => {
       return res.status(400).json({ message: 'Product not found in cart' });
     }
 
-    const productInCart = user.cart.find(item => item.id === productId);
-
-    if (productInCart.quantity > 1) {
-      productInCart.quantity -= 1;
-    } else {
-      user.cart = user.cart.filter(item => item.id !== productId);
-    }
+    user.cart = user.cart.filter(item => item.id !== productId);
 
     await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2));
 
-    res.status(200).json({ message: 'Product quantity updated or removed from cart' });
+    res.status(200).json({ message: 'Product removed from cart' });
   } catch (err) {
     console.error('Error removing product from cart:', err);
     res.status(500).json({ message: 'Error processing request' });
   }
 });
+
 
 
 app.post('/clear-cart', async (req, res) => {
@@ -474,6 +470,7 @@ const generateSaleCode = () => {
 
 app.post('/add-sale-code', async (req, res) => {
   const { email } = req.body; 
+  console.log(email)
 
   try {
     const data = await fs.readFile(usersFilePath, 'utf8');
@@ -483,6 +480,10 @@ app.post('/add-sale-code', async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (!user.sale) {
+      user.sale = [];
     }
 
     const saleCode = generateSaleCode();
@@ -505,7 +506,7 @@ app.post('/add-sale-code', async (req, res) => {
 
 app.delete('/remove-sale-code', async (req, res) => {
   const { email, saleCode } = req.body; 
-
+console.log("ja")
   try {
     const data = await fs.readFile(usersFilePath, 'utf8');
     const users = JSON.parse(data);
@@ -534,6 +535,7 @@ app.delete('/remove-sale-code', async (req, res) => {
 });
 app.get('/get-sale-codes', async (req, res) => {
   const { email } = req.query;  
+  console.log(email)
 
   if (!email) {
     return res.status(400).json({ message: 'Email is required' });
@@ -546,6 +548,7 @@ app.get('/get-sale-codes', async (req, res) => {
     const user = users.find(user => user.email === email);
 
     if (!user) {
+      console.log("not")
       return res.status(404).json({ message: 'User not found' });
     }
 
