@@ -114,11 +114,10 @@ const CartItems = () => {
                 const result = await response.json();
 
                 if (response.ok) {
-                    const fetchedCart = result.cart.reduce((acc, item) => {
+                    const fetchedCart = result.cart?.reduce((acc, item) => {
                         acc[item.product_id] = item.quantity;
                         return acc;
-                    }, {});
-                    console.log(":aa",fetchedCart)
+                    }, {}) || [];
                     setUserCart(fetchedCart);
                     setCartItems(fetchedCart);
                 } 

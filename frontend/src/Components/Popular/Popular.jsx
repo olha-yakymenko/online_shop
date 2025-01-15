@@ -1,20 +1,26 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import "./Popular.css"
-import all_product from '../Assets/all_product'
+import { ProductContext } from '../../Context/ProductContext';  
+// import all_product from '../Assets/all_product'
 import product_availability from '../Assets/availibility';
 import Item from '../Item/Item'
+
 const Popular = () => {
+    const {all_product}=useContext(ProductContext)
+    console.log(all_product)
     const cat_product = all_product
         .map((item) => {
-            const availability = product_availability.find((avail) => avail.id === item.id);
+            console.log(item)
+            // const availability = product_availability.find((avail) => avail.id === item.id);
             return {
                 ...item,
-                isAvailable: availability ? availability.isAvailable : false,
-                popular: availability ? availability.popular : false,
+                isavailable: item ? item.isavailable : false,
+                popular: item ? item.popular : false,
 
             };
         })
-        .filter((item) => item.isAvailable && item.popular);
+        .filter((item) => item.isavailable && item.popular);
+        console.log(cat_product)
     return (
         <div className="popular">
         <h1>POPULAR IN WOMEN</h1>

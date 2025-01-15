@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const fs = require('fs').promises;
 const cors = require('cors'); 
 const app = express();
-const usersFilePath = './users.json';
 const nodemailer=require('nodemailer')
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -21,6 +20,8 @@ app.use(express.json());
 const User = require('./models/User');
 const Cart = require('./models/Cart');
 const Sale = require('./models/Sale');
+const Product = require('./models/Product')
+const ProductComments = require('./models/ProductComments')
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -642,14 +643,43 @@ const plik = path.join(__dirname, '..', 'frontend', 'src', 'Components', 'Assets
 
 console.log('Plik do zapisu:', plik);
 
-app.post('/save-products', (req, res) => {
-  const products = req.body;  
-  fs.writeFile(plik, `const product_availability = ${JSON.stringify(products, null, 2)};\nexport default product_availability;`, (err) => {
-    if (err) {
-      return res.status(500).send('Błąd zapisu do pliku');
+// app.post('/save-products', (req, res) => {
+//   const products = req.body;  
+//   fs.writeFile(plik, `const product_availability = ${JSON.stringify(products, null, 2)};\nexport default product_availability;`, (err) => {
+//     if (err) {
+//       return res.status(500).send('Błąd zapisu do pliku');
+//     }
+//     res.status(200).send('Produkty zapisane pomyślnie');
+//   });
+// });
+
+
+app.post('/save-product', async (req, res) => {
+  const { id, isavailable, popular, isNew } = req.body;
+  console.log(id, isavailable, popular, isNew);
+  // Budowanie obiektu aktualizacji
+  const updates = {};
+  if (typeof isavailable !== 'undefined') updates.isavailable = isavailable;
+  if (typeof popular !== 'undefined') updates.popular = popular;
+  if (typeof isNew !== 'undefined') updates.new = isNew;
+
+  try {
+    // Aktualizacja produktu w bazie danych
+    const updatedProduct = await Product.update(updates, {
+      where: { id },
+      returning: true, // Zwracamy zaktualizowany produkt
+    });
+
+    if (!updatedProduct[0]) {
+      return res.status(404).send('Produkt nie został znaleziony');
     }
-    res.status(200).send('Produkty zapisane pomyślnie');
-  });
+
+    // Zwracamy zaktualizowany produkt
+    res.status(200).json(updatedProduct[1][0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Błąd serwera');
+  }
 });
 
 const salesDataPath = './sales_data.json'; 
@@ -1057,6 +1087,79 @@ app.get('/get-users', async (req, res) => {
   } catch (err) {
     console.error('Error fetching users:', err);
     res.status(500).json({ message: 'Error fetching users' });
+  }
+});
+
+app.get('/product/:id', async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const product = await Product.findOne({ where: { id: productId } });
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    const imageBuffer = product.image;
+
+    const imageType = 'image/png'; 
+
+    res.setHeader('Content-Type', imageType);
+
+    res.send(imageBuffer);
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    res.status(500).json({ message: 'Error fetching product' });
+  }
+});
+
+app.get('/products', async (req, res) => {
+  try {
+    const products = await Product.findAll();
+
+    const productsWithImages = products.map(product => {
+      let imageBase64 = null;
+      if (product.image) {
+        imageBase64 = product.image.toString('base64');
+      }
+      return {
+        ...product.toJSON(), 
+        image: imageBase64 ? `data:image/jpeg;base64,${imageBase64}` : null 
+      };
+    });
+
+    res.status(200).json(productsWithImages);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching products', error: error.message });
+  }
+});
+
+app.post('/add-comment', async (req, res) => {
+  const { product_id, user_name, comment, rating } = req.body;
+  console.log(req.body)
+  if (!product_id || !user_name || !comment || rating === undefined) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  if (rating < 1 || rating > 5) {
+    return res.status(400).json({ message: 'Rating must be between 1 and 5' });
+  }
+
+  try {
+    const newComment = await ProductComments.create({
+      product_id,
+      user_name,
+      comment,
+      rating,
+    });
+
+    res.status(201).json({
+      message: 'Comment added successfully',
+      comment: newComment,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error saving comment', error: error.message });
   }
 });
 

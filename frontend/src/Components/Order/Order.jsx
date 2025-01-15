@@ -1,8 +1,9 @@
-import React, { useReducer, useState, useCallback } from "react";
+import React, { useReducer, useState, useCallback, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { ProductContext } from '../../Context/ProductContext'; 
 import { useMutation, useQueryClient } from 'react-query';
-import all_product from "../Assets/all_product";
+// import all_product from "../Assets/all_product";
 import './Order.css'
 
 const formReducer = (state, action) => {
@@ -47,7 +48,7 @@ const Order = ({ totalAmount, clearCart, cartItems}) => {
   const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
   const [message, setMessage] = useState({ text: '', type: '' });
-console.log("CART", cartItems)
+  const {all_product}=useContext(ProductContext)
 
   const handleNextStep = useCallback(
     (values, validateForm) => {

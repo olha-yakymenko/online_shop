@@ -2,11 +2,11 @@ import React, { useContext, useState, useEffect } from 'react';
 import { ShopContext } from '../Context/ShopContext';
 import Item from '../Components/Item/Item';
 import './CSS/ShopCategory.css';
-import product_availability from '../Components/Assets/availibility';
+// import product_availability from '../Components/Assets/availibility';
 
 const ShopCategory = (props) => {
     const { all_product } = useContext(ShopContext);
-
+    console.log("AA", all_product)
     const categoryTypes = {
         men: ["Jacket", "T-shirt", "Jeans"],
         women: ["Blouse", "Dress", "Skirt"],
@@ -22,16 +22,26 @@ const ShopCategory = (props) => {
         category: props.category || "all",
     });
 
+    // const cat_product = all_product
+    //     .map((item) => {
+    //         const availability = product_availability.find((avail) => avail.id === item.id);
+    //         return {
+    //             ...item,
+    //             isAvailable: availability ? availability.isAvailable : false,
+    //         };
+    //     })
     const cat_product = all_product
         .map((item) => {
-            const availability = product_availability.find((avail) => avail.id === item.id);
+            // const availability = product_availability.find((avail) => avail.id === item.id);
             return {
                 ...item,
-                isAvailable: availability ? availability.isAvailable : false,
+                isavailable: item ? item.isavailable : false,
+                new: item ? item.new : false,
+
             };
         })
-        .filter((item) => props.category === item.category && item.isAvailable);
-
+        .filter((item) => props.category === item.category && item.isavailable);
+        console.log(cat_product)
     const sortProducts = (products, criteria) => {
         switch (criteria) {
             case "price_asc":

@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../db'); // Przyjmujemy, że plik z konfiguracją jest w ../db.js
+const sequelize = require('../db');
 
 const User = sequelize.define('User', {
   id: {
@@ -40,7 +40,7 @@ const User = sequelize.define('User', {
   },
 }, {
   tableName: 'users',
-  timestamps: false,  // Brak domyślnych pól 'createdAt' i 'updatedAt', bo masz 'created_at'
+  timestamps: false,  
 });
 
 module.exports = User;

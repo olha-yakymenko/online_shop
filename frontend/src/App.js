@@ -17,6 +17,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import  ShopContext  from './Context/ShopContext';
 import AdminNavbar from './Components/Navbar/AdminNavbar';
 import AdminUserPanel from './Components/Admin/AdminUserPanel';
+import  ProductContext from './Context/ProductContext'
 const queryClient = new QueryClient();
 
 const AppContent = () => {
@@ -52,6 +53,7 @@ const AppContent = () => {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <ProductContext>
       <ShopContext>
       <UserProvider>
         <SearchContextProvider>
@@ -59,6 +61,7 @@ function App() {
         </SearchContextProvider>
       </UserProvider>
       </ShopContext>
+      </ProductContext>
     </QueryClientProvider>
   );
 }

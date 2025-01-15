@@ -29,7 +29,7 @@ const SearchResults = () => {
     };
 
     const filterProducts = (products) => {
-        return products.filter(item => item.isAvailable===true).filter((product) => {
+        return products.filter(item => item.isavailable===true).filter((product) => {
             const matchesSize =
                 filters.size.length === 0 ||
                 (product.filters?.sizes &&

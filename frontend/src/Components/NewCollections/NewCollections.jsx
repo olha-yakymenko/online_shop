@@ -1,20 +1,25 @@
 import React from 'react';
 import './NewCollections.css'
-import all_product from '../Assets/all_product';
-import product_availability from '../Assets/availibility';
+import {useContext} from 'react'
+// import all_product from '../Assets/all_product';
+// import product_availability from '../Assets/availibility';
+import { ProductContext } from '../../Context/ProductContext';
 import Item from '../Item/Item'
 const NewCollections = () => {
+    const {all_product}=useContext(ProductContext)
     const cat_product = all_product
         .map((item) => {
-            const availability = product_availability.find((avail) => avail.id === item.id);
+            console.log(item)
+            // const availability = product_availability.find((avail) => avail.id === item.id);
             return {
                 ...item,
-                isAvailable: availability ? availability.isAvailable : false,
-                new: availability ? availability.new : false,
+                isavailable: item ? item.isavailable : false,
+                new: item ? item.new : false,
 
             };
         })
-        .filter((item) => item.isAvailable && item.new);
+        .filter((item) =>  item.isavailable && item.new);
+        console.log(cat_product)
     return (
         <div className='new-collections'>
             <h1>NEW COLLECTIONS</h1>

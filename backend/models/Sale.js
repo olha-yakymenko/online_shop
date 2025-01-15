@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../db'); // Załóżmy, że konfiguracja Sequelize znajduje się tutaj
+const sequelize = require('../db'); 
 const User = require('./User');
 const Sale = sequelize.define(
   'Sale',
@@ -11,9 +11,9 @@ const Sale = sequelize.define(
     },
     user_id: {
       type: DataTypes.INTEGER,
-      allowNull: true, // Możesz zmienić na `false`, jeśli jest wymagane
+      allowNull: true,
       references: {
-        model: User, // Nazwa tabeli `users` w bazie danych
+        model: User, 
         key: 'id',
       },
       onDelete: 'CASCADE',
@@ -29,7 +29,7 @@ const Sale = sequelize.define(
   },
   {
     tableName: 'sales',
-    timestamps: false, // Wyłączenie automatycznego dodawania `createdAt` i `updatedAt`
+    timestamps: false, 
   }
 );
 

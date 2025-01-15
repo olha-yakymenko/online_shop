@@ -1,25 +1,28 @@
 import React, { useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
-import all_product from "../Assets/all_product"; 
-import product_availability from "../Assets/availibility";
+// import all_product from "../Assets/all_product"; 
+import { ProductContext } from '../../Context/ProductContext'; 
+// import product_availability from "../Assets/availibility";
 import './Search.css';
 
 const Search = () => {
     const { setSearchResults, setSearchTerm, searchTerm } = useContext(SearchContext);  
     const searchRef = useRef(null);
     const navigate = useNavigate();
+    const {all_product}=useContext(ProductContext)
+
 
     const getAvailableProducts = () => {
         return all_product
             .map((item) => {
-                const availability = product_availability.find(avail => avail.id === item.id);
+                // const availability = product_availability.find(avail => avail.id === item.id);
                 return {
                     ...item,
-                    isAvailable: availability ? availability.isAvailable : false,
+                    isavailable: item ? item.isavailable : false,
                 };
             })
-            .filter(item => item.isAvailable === true);
+            .filter(item => item.isavailable === true);
     };
 
     const filterProducts = (products, term) => {

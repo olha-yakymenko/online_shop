@@ -1,20 +1,23 @@
-import React from 'react';
+import { React, useContext } from 'react';
 import './RelatedProducts.css';
-import all_product from '../Assets/all_product';
-import product_availability from '../Assets/availibility';
+import { ProductContext } from '../../Context/ProductContext';   
+// import all_product from '../Assets/all_product';
+// import product_availability from '../Assets/availibility';
 import Item from '../Item/Item';
 
 const RelatedProducts = (props) => {
     const { product } = props;
+    const {all_product}=useContext(ProductContext)
+
     const cat_product = all_product
         .map((item) => {
-            const availability = product_availability.find((avail) => avail.id === item.id);
+            // const availability = product_availability.find((avail) => avail.id === item.id);
             return {
                 ...item,
-                isAvailable: availability ? availability.isAvailable : false,
+                isAvailable: item ? item.isavailable : false,
             };
         })
-        .filter((item) => item.isAvailable);
+        .filter((item) => item.isavailable);
     const currentProduct = cat_product.find(item => item.id === product.id);
     if (!currentProduct) {
         return <div>Produkt nie znaleziony</div>;
