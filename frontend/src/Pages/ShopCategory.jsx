@@ -59,19 +59,20 @@ const ShopCategory = (props) => {
 
     const filterByCategory = (products) => {
         return products.filter((product) => {
+            console.log(product)
             const matchesType =
             selectedType.length === 0 || selectedType.includes(product.type);
 
 
             const matchesSize =
                 filters.size.length === 0 ||
-                (product.filters?.sizes &&
-                    filters.size.every((size) => product.filters.sizes.includes(size)));
+                (product.sizes &&
+                    filters.size.every((size) => product.sizes.includes(size)));
 
             const matchesColor =
                 filters.color.length === 0 ||
-                (product.filters?.colors &&
-                    filters.color.every((color) => product.filters.colors.includes(color)));
+                (product.colors &&
+                    filters.color.every((color) => product.colors.includes(color)));
 
             const matchesPrice =
                 product.new_price >= filters.priceRange[0] && product.new_price <= filters.priceRange[1];

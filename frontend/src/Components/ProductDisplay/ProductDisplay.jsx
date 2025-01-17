@@ -1,35 +1,65 @@
-import React, { useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useContext, useState, useMemo, useCallback } from 'react';
 import './ProductDisplay.css';
 import star_icon from '../Assets/star_icon.png';
 import star_dull_icon from '../Assets/star_dull_icon.png';
 import { ShopContext } from '../../Context/ShopContext';
 import { UserContext } from '../../Context/UserContext';
-
+import { ProductContext } from '../../Context/ProductContext';
 const ProductDisplay = (props) => {
+    console.log(props)
     const { product } = props;
     const { addToCart } = useContext(ShopContext);
     const { user } = useContext(UserContext);
     const [message, setMessage] = useState({ text: '', type: '' });
     const [userRating, setUserRating] = useState(0);
     const [likes, setLikes] = useState(product?.likes || []);
-
+    const {rating} = useContext(ProductContext)
     const averageRating = useMemo(() => {
-        if (likes.length > 0) {
+        if (rating.length > likes.length){
+            setLikes(rating)
+        }
+        if (Array.isArray(likes) && likes.length > 0) {
             const avgRating = (likes.reduce((acc, curr) => acc + curr, 0) / likes.length).toFixed(1);
             return avgRating;
         }
         return 0;
-    }, [likes]);
-
-    const handleRatingChange = (rating) => {
+    }, [likes, rating]);
+    async function handleRatingChange(rating) {
+        console.log('wysylam')
         if (!user) {
-            setMessage({ text: 'You must be logged in to rate products', type: 'message' });
+            setMessage({ text: 'You must be logged in to rate products', type: 'error' });
             return;
         }
-
-        setUserRating(rating);
-        setLikes((prevLikes) => [...prevLikes.slice(0, -1), rating]);
-    };
+    
+        try {
+            const response = await fetch('http://localhost:5055/update-product', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: product.id,
+                    newLike: rating,
+                }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Wystąpił błąd podczas aktualizacji oceny produktu');
+            }
+    
+            const updatedProduct = await response.json();
+            console.log('Zaktualizowany produkt:', updatedProduct);
+    
+            setUserRating(rating);  
+            setLikes(updatedProduct.likes);  
+        } catch (error) {
+            console.error('Błąd:', error);
+        }
+    }
+    
+   
+   
+      
 
     const handleAddToCart = useCallback(async () => {
         if (!user) {
@@ -102,6 +132,9 @@ const ProductDisplay = (props) => {
                     ))}
                 </div>
 
+
+
+
                 <div className="productdisplay-right-prices">
                     <div className="productdisplay-right-price-old">
                         ${product.old_price}
@@ -111,12 +144,12 @@ const ProductDisplay = (props) => {
                     </div>
                 </div>
                 <div className="productdisplay-right-description">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae doloribus sunt nihil earum ex veniam nostrum obcaecati, labore illum laudantium!
+                   <div>{product.description}</div>
                 </div>
                 <div className="productdisplay-right-size">
                     <h1>Select Size</h1>
                     <div className="productdisplay-right-sizes">
-                        {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                        {product?.sizes?.map((size) => (
                             <div key={size}>{size}</div>
                         ))}
                     </div>

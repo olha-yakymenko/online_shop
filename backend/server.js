@@ -8,7 +8,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const { Op } = require('sequelize');
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(cors({
   origin: ['http://localhost:3000', 'http://localhost:1111'], 
   methods: 'GET, POST, PUT, DELETE', 
@@ -657,24 +657,20 @@ console.log('Plik do zapisu:', plik);
 app.post('/save-product', async (req, res) => {
   const { id, isavailable, popular, isNew } = req.body;
   console.log(id, isavailable, popular, isNew);
-  // Budowanie obiektu aktualizacji
   const updates = {};
   if (typeof isavailable !== 'undefined') updates.isavailable = isavailable;
   if (typeof popular !== 'undefined') updates.popular = popular;
   if (typeof isNew !== 'undefined') updates.new = isNew;
 
   try {
-    // Aktualizacja produktu w bazie danych
     const updatedProduct = await Product.update(updates, {
       where: { id },
-      returning: true, // Zwracamy zaktualizowany produkt
+      returning: true, 
     });
 
     if (!updatedProduct[0]) {
       return res.status(404).send('Produkt nie został znaleziony');
     }
-
-    // Zwracamy zaktualizowany produkt
     res.status(200).json(updatedProduct[1][0]);
   } catch (error) {
     console.error(error);
@@ -1163,6 +1159,110 @@ app.post('/add-comment', async (req, res) => {
   }
 });
 
+const multer = require('multer');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+// // Równocześnie obsługujemy aktualizację produktu i obraz w jednym zapytaniu
+// app.put('/update-product', upload.single('image'), async (req, res) => {
+//   const { id, name, category, price, description } = req.body;
+
+//   // Możemy uzyskać dane obrazu z `req.file`, jeśli został przesłany
+//   const image = req.file ? req.file.buffer : null;
+
+//   const updates = {};
+//   if (typeof name !== 'undefined') updates.name = name;
+//   if (typeof category !== 'undefined') updates.category = category;
+//   if (typeof price !== 'undefined') updates.new_price = price;
+//   if (typeof description !== 'undefined') updates.description = description;
+
+//   // Dodajemy obraz, jeśli został przesłany
+//   if (image) {
+//     updates.image = image;  // Zapisujemy obraz w formie binarnej (Buffer)
+//   }
+
+//   try {
+//     const updatedProduct = await Product.update(updates, {
+//       where: { id },
+//       returning: true, 
+//     });
+
+//     if (!updatedProduct[0]) {
+//       return res.status(404).send('Produkt nie został znaleziony');
+//     }
+
+//     res.status(200).json(updatedProduct[1][0]);
+//   } catch (error) {
+//     console.error('Błąd podczas aktualizacji produktu:', error);
+//     res.status(500).send('Błąd serwera');
+//   }
+// });
+
+app.put('/update-product', upload.single('image'), async (req, res) => {
+  const { 
+    id, 
+    name, 
+    category, 
+    price, 
+    description, 
+    newLike, 
+    sizes, 
+    colors 
+  } = req.body;
+
+  const image = req.file ? req.file.buffer : null;
+
+  const updates = {};
+
+  if (typeof name !== 'undefined') updates.name = name;
+  if (typeof category !== 'undefined') updates.category = category;
+  if (typeof price !== 'undefined') updates.new_price = price;
+  if (typeof description !== 'undefined') updates.description = description;
+
+  const product = await Product.findByPk(id);
+
+  if (typeof newLike !== 'undefined') {
+    const likeValue = parseInt(newLike, 10); 
+    if (!isNaN(likeValue) && likeValue >= 1 && likeValue <= 5) {
+      if (product && Array.isArray(product.likes)) {
+        updates.likes = [...product.likes, likeValue];  
+      } else {
+        updates.likes = [likeValue]; 
+      }
+    } else {
+      return res.status(400).send('Nieprawidłowa wartość oceny');
+    }
+  }
+
+  if (Array.isArray(sizes)) {
+    updates.sizes = sizes; 
+  }
+
+  if (Array.isArray(colors)) {
+    updates.colors = colors; 
+  }
+
+  if (image) {
+    updates.image = image; 
+  }
+
+  try {
+    const updatedProduct = await Product.update(updates, {
+      where: { id },
+      returning: true, 
+    });
+
+    if (!updatedProduct[0]) {
+      return res.status(404).send('Produkt nie został znaleziony');
+    }
+
+    res.status(200).json(updatedProduct[1][0]); 
+  } catch (error) {
+    console.error('Błąd podczas aktualizacji produktu:', error);
+    res.status(500).send('Błąd serwera');
+  }
+});
 
 
 const port = 5055;

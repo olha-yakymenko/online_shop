@@ -113,17 +113,15 @@
 import React, { useState, useContext, useEffect } from 'react';
 import './DescriptionBox.css';
 import { UserContext } from '../../Context/UserContext';
-import axios from 'axios';
-
+import { ProductContext } from '../../Context/ProductContext';
 const DescriptionBox = ({ product }) => {
   const { user } = useContext(UserContext);
   const [activeTab, setActiveTab] = useState('description');
   const [newComment, setNewComment] = useState('');
-  const [newRating, setNewRating] = useState(1);  // Domyślnie ustawiona na 1
+  const [newRating, setNewRating] = useState(1);  
   const [comments, setComments] = useState(product.comments || []);
   const [message, setMessage] = useState({ text: '', type: '' });
-
-  // Funkcja zapisująca komentarze do localStorage (opcjonalnie)
+  const { updateAverageRating } = useContext(ProductContext)
   const saveCommentsToLocalStorage = (comments) => {
     localStorage.setItem(
       `product_${product.id}_comments`,
@@ -167,8 +165,33 @@ const DescriptionBox = ({ product }) => {
                 setComments(updatedComments);
                 saveCommentsToLocalStorage(updatedComments);
                 setNewComment('');
-                setNewRating(1);  // Zresetuj ocenę po dodaniu
+                setNewRating(1);  
                 setMessage({ text: 'Comment added successfully', type: 'success' });
+
+                try {
+                  const updateResponse = await fetch('http://localhost:5055/update-product', {
+                      method: 'PUT',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                          id: product.id,
+                          newLike: newRating,
+                      }),
+                  });
+      
+                  if (!updateResponse.ok) {
+                      const errorData = await updateResponse.json();
+                      setMessage({ text: `Error updating product rating: ${errorData.message || 'Failed to update rating'}`, type: 'error' });
+                  } else {
+                      const updatedProduct = await updateResponse.json();
+                      console.log('Product rating updated successfully:', updatedProduct);
+                      updateAverageRating(updatedProduct.likes)
+                  }
+              } catch (error) {
+                  console.error("Error updating product rating:", error);
+                  setMessage({ text: 'An error occurred while updating the product rating', type: 'error' });
+              }
             } else {
                 const errorData = await response.json();
                 setMessage({ text: `Error: ${errorData.message || 'Failed to add comment'}`, type: 'error' });

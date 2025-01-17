@@ -4,6 +4,8 @@ export const ProductContext = createContext(null);
 
 const ProductContextProvider = ({ children }) => {
   const [all_product, setAllProduct] = useState([]);
+  const [rating, setAverageRating] = useState(0);
+
 const fetchProducts = async () => {
       try {
         const response = await fetch('http://localhost:5055/products');
@@ -19,8 +21,12 @@ const fetchProducts = async () => {
     fetchProducts();
   }, []); 
 
+  const updateAverageRating = (newRating) => {
+    setAverageRating(newRating);
+};
+
   return (
-    <ProductContext.Provider value={{ all_product, fetchProducts }}>
+    <ProductContext.Provider value={{ all_product, fetchProducts, updateAverageRating, rating }}>
       {children}
     </ProductContext.Provider>
   );

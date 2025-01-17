@@ -32,7 +32,7 @@ const Product = sequelize.define(
     },
     old_price: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
+      allowNull: true,
     },
     description: {
       type: DataTypes.TEXT,
