@@ -6,6 +6,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { UserContext } from './Context/UserContext';
 import LoginSignup from './Pages/LoginSignup';
+import { ProductContext } from './Context/ProductContext';
 
 test('renders Shop link', () => {
   render(<AppContent />);
@@ -21,6 +22,7 @@ test('renders LoginSignup component on /login route', () => {
   const user = null;
   render(
     <QueryClientProvider client={queryClient}>
+      <ProductContext>
       <UserContext.Provider value={{ user }}>
         <MemoryRouter initialEntries={['/login']}>
           <Routes>
@@ -28,6 +30,7 @@ test('renders LoginSignup component on /login route', () => {
           </Routes>
         </MemoryRouter>
       </UserContext.Provider>
+      </ProductContext>
     </QueryClientProvider>
   );
 
@@ -43,6 +46,7 @@ test('renders SearchResults component on /search-results route', () => {
   const user = { role: 'user' };
   render(
     <QueryClientProvider client={queryClient}>
+      <ProductContext>
       <UserContext.Provider value={{ user }}>
         <MemoryRouter initialEntries={['/search-results']}>
           <Routes>
@@ -51,6 +55,7 @@ test('renders SearchResults component on /search-results route', () => {
           </Routes>
         </MemoryRouter>
       </UserContext.Provider>
+      </ProductContext>
     </QueryClientProvider>
   );
 

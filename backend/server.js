@@ -34,7 +34,6 @@ app.post('/login', async (req, res) => {
  
 
     if (!user) {
-      console.log("tut")
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
@@ -655,7 +654,8 @@ console.log('Plik do zapisu:', plik);
 
 
 app.post('/save-product', async (req, res) => {
-  const { id, isavailable, popular, isNew } = req.body;
+  console.log(req.body)
+  const { id, isavailable, popular, new: isNew } = req.body;
   console.log(id, isavailable, popular, isNew);
   const updates = {};
   if (typeof isavailable !== 'undefined') updates.isavailable = isavailable;
@@ -1263,6 +1263,70 @@ app.put('/update-product', upload.single('image'), async (req, res) => {
     res.status(500).send('Błąd serwera');
   }
 });
+
+
+app.post('/add-product', upload.single('image'), async (req, res) => {
+  const { 
+    name, 
+    category, 
+    price, 
+    type,
+    description, 
+    sizes, 
+    colors 
+  } = req.body;
+ 
+  const image = req.file ? req.file.buffer : null;
+
+  const updates = {};
+
+  updates.name = name;
+  updates.category = category;
+  updates.new_price = price;
+  updates.type = type;
+  updates.description = description;
+  if (Array.isArray(sizes)) {
+    updates.sizes = sizes; 
+  }
+
+  if (Array.isArray(colors)) {
+    updates.colors = colors; 
+  } 
+  updates.image = image; 
+  try {
+    const newProduct = await Product.create(updates);
+
+    res.status(201).json(newProduct); 
+  } catch (error) {
+    console.error('Błąd podczas dodawania produktu:', error);
+    res.status(500).send('Błąd serwera');
+  }
+});
+
+app.delete('/delete-product/:id', async (req, res) => {
+  const { id } = req.params; 
+
+  if (!id) {
+    return res.status(400).json({ success: false, message: 'ID is required' });
+  }
+
+  try {
+    const product = await Product.findByPk(id);
+
+    if (!product) {
+      return res.status(404).json({ success: false, message: 'Product not found' });
+    }
+
+    await ProductComments.destroy({ where: { product_id: id } });
+    await product.destroy();
+
+    res.status(200).json({ success: true, message: 'Product deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    res.status(500).json({ success: false, message: 'Failed to delete product' });
+  }
+});
+
 
 
 const port = 5055;

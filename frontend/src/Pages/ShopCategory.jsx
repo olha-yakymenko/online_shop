@@ -41,7 +41,6 @@ const ShopCategory = (props) => {
             };
         })
         .filter((item) => props.category === item.category && item.isavailable);
-        console.log(cat_product)
     const sortProducts = (products, criteria) => {
         switch (criteria) {
             case "price_asc":
@@ -179,7 +178,6 @@ const ShopCategory = (props) => {
                     </div>
                 </div>
 
-                {/* Produkty */}
                 <div className="shopcategory-products">
                     {sortedProducts.map((item, i) => (
                         <Item
