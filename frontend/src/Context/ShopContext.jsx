@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 // import all_product from '../Components/Assets/all_product';
 import { ProductContext } from './ProductContext';
 export const ShopContext = createContext(null);
@@ -15,7 +15,13 @@ const getDefaultCart = () => {
   };
   
   const [cartItems, setCartItems] = useState(getDefaultCart());
-  
+
+useEffect(() => {
+    if (all_product && all_product.length > 0) {
+        setCartItems(getDefaultCart());
+    }
+}, [all_product]);
+
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
   };

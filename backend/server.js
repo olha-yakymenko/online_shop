@@ -613,7 +613,6 @@ const transporter = nodemailer.createTransport({
 
 app.post('/send-confirmation', (req, res) => {
   const { contactInfo, address, paymentMethod, totalAmount } = req.body;
-
   const mailOptions = {
     from: 'onlineshopyak@gmail.com',
     to: contactInfo.email, 
@@ -633,6 +632,7 @@ app.post('/send-confirmation', (req, res) => {
       console.error('Error sending email:', error);
       return res.status(500).json({ message: 'Błąd wysyłania e-maila' });
     }
+    console.log("sukces potw")
     res.status(200).json({ message: 'Potwierdzenie wysłane' });
   });
 });
@@ -680,17 +680,74 @@ app.post('/save-product', async (req, res) => {
 
 const salesDataPath = './sales_data.json'; 
 
-app.get('/sales-report', async (req, res) => {
-  const { startDate, endDate } = req.query; 
+// app.get('/sales-report', async (req, res) => {
+//   const { startDate, endDate } = req.query; 
   
+//   try {
+//     const data = await fs.readFile(salesDataPath, 'utf-8');
+//     const sales = JSON.parse(data);
+
+//     const filteredSales = sales.filter(sale => {
+//       const saleDate = new Date(sale.date);
+//       return saleDate >= new Date(startDate) && saleDate <= new Date(endDate);
+//     });
+//     res.json(filteredSales);
+//   } catch (err) {
+//     console.error('Error reading sales data:', err);
+//     res.status(500).json({ message: 'Error fetching sales report' });
+//   }
+// });
+
+app.get('/sales-report', async (req, res) => {
+  const { startDate, endDate } = req.query;
+
   try {
     const data = await fs.readFile(salesDataPath, 'utf-8');
     const sales = JSON.parse(data);
+    console.log('Sales data:', sales);  // Debugowanie - sprawdzamy dane
 
-    const filteredSales = sales.filter(sale => {
-      const saleDate = new Date(sale.date);
-      return saleDate >= new Date(startDate) && saleDate <= new Date(endDate);
-    });
+    // Przekształcenie daty startowej i końcowej na obiekty Date (porównanie na podstawie stringów)
+    const start = startDate ? new Date(startDate) : new Date(0); // Jeśli brak startDate, domyślnie 1970
+    const end = endDate ? new Date(endDate) : new Date(); // Jeśli brak endDate, domyślnie teraz
+
+    console.log('Start date:', start);
+    console.log('End date:', end);
+
+    // Przekształcamy daty na format 'YYYY-MM-DD' do porównań
+    const formatDate = (date) => new Date(date).toISOString().split('T')[0];
+
+    // Filtrujemy sprzedaż na podstawie dat
+    const filteredSales = sales.map((sale) => {
+      // Przekształcamy sprzedaż w mapę dat => { ilość, przychód }
+      const filteredSalesForProduct = Object.entries(sale.sales)
+        .filter(([date, { quantity, revenue }]) => {
+          const saleDate = new Date(date);
+          console.log('Sale date:', saleDate);
+          return saleDate >= start && saleDate <= end; // Sprawdzamy, czy data sprzedaży mieści się w przedziale
+        })
+        .map(([date, { quantity, revenue }]) => ({
+          date,
+          quantity,
+          revenue,
+        }));
+
+      // Jeśli produkt ma sprzedaż w wybranym okresie, zwracamy zaktualizowane dane
+      if (filteredSalesForProduct.length > 0) {
+        const totalQuantity = filteredSalesForProduct.reduce((acc, { quantity }) => acc + quantity, 0);
+        const totalRevenue = filteredSalesForProduct.reduce((acc, { revenue }) => acc + revenue, 0);
+
+        return {
+          name: sale.name,
+          totalQuantity,
+          totalRevenue,
+          sales: filteredSalesForProduct,
+        };
+      }
+      return null; // Jeśli brak sprzedaży w tym okresie, zwróć null
+    }).filter(Boolean); // Usuwamy produkty, które nie miały sprzedaży w danym okresie
+
+    console.log('Filtered sales:', filteredSales);  // Debugowanie - sprawdzamy przefiltrowane dane
+
     res.json(filteredSales);
   } catch (err) {
     console.error('Error reading sales data:', err);
@@ -699,7 +756,42 @@ app.get('/sales-report', async (req, res) => {
 });
 
 
+// app.post('/submit-order', async (req, res) => {
+//   const { address, contactInfo, paymentMethod, totalAmount, cartItems } = req.body;
+//   console.log('Received order:', req.body);
 
+//   try {
+//     try {
+//       await fs.access(salesDataPath);
+//     } catch (err) {
+//       console.error('Sales data file does not exist:', err);
+//       return res.status(500).json({ message: 'Sales data file does not exist' });
+//     }
+
+//     const currentSalesData = JSON.parse(await fs.readFile(salesDataPath, 'utf8'));
+
+//     cartItems.forEach((item) => {
+//       const existingProduct = currentSalesData.find((product) => product.name === item.name);
+//       if (existingProduct) {
+//         existingProduct.totalQuantity += item.quantity;
+//         existingProduct.totalRevenue += item.quantity * item.price;
+//       } else {
+//         currentSalesData.push({
+//           name: item.name,
+//           totalQuantity: item.quantity,
+//           totalRevenue: item.quantity * item.price,
+//           date: new Date().toISOString(),
+//         });
+//       }
+//     });
+
+//     await fs.writeFile(salesDataPath, JSON.stringify(currentSalesData, null, 2));
+//     res.status(200).json({ message: 'Zamówienie zapisane' });
+//   } catch (error) {
+//     console.error('Error saving order:', error);
+//     res.status(500).json({ message: 'Błąd zapisu zamówienia' });
+//   }
+// });
 app.post('/submit-order', async (req, res) => {
   const { address, contactInfo, paymentMethod, totalAmount, cartItems } = req.body;
   console.log('Received order:', req.body);
@@ -714,17 +806,44 @@ app.post('/submit-order', async (req, res) => {
 
     const currentSalesData = JSON.parse(await fs.readFile(salesDataPath, 'utf8'));
 
+    // Funkcja do obliczenia formatu daty bez czasu (np. YYYY-MM-DD)
+    const formatDate = (date) => new Date(date).toISOString().split('T')[0];
+
     cartItems.forEach((item) => {
       const existingProduct = currentSalesData.find((product) => product.name === item.name);
+
+      // Zapisujemy datę transakcji jako "YYYY-MM-DD"
+      const transactionDate = formatDate(new Date().toISOString());
+      const totalRevenueForItem = item.quantity * item.price; // Całkowity przychód dla tego produktu
+
       if (existingProduct) {
+        // Jeśli produkt już istnieje, sprawdzamy, czy ta data już istnieje
+        if (existingProduct.sales[transactionDate]) {
+          // Jeśli data istnieje, zwiększamy ilość sprzedaży i przychód
+          existingProduct.sales[transactionDate].quantity += item.quantity;
+          existingProduct.sales[transactionDate].revenue += totalRevenueForItem;
+        } else {
+          // Jeśli data nie istnieje, tworzymy nową parę data:ilość i data:przychód
+          existingProduct.sales[transactionDate] = {
+            quantity: item.quantity,
+            revenue: totalRevenueForItem,
+          };
+        }
+        // Aktualizujemy całkowitą ilość i przychód produktu
         existingProduct.totalQuantity += item.quantity;
-        existingProduct.totalRevenue += item.quantity * item.price;
+        existingProduct.totalRevenue += totalRevenueForItem;
       } else {
+        // Jeśli produkt nie istnieje, tworzymy nowy obiekt produktu
         currentSalesData.push({
           name: item.name,
           totalQuantity: item.quantity,
-          totalRevenue: item.quantity * item.price,
-          date: new Date().toISOString(),
+          totalRevenue: totalRevenueForItem,
+          sales: {
+            [transactionDate]: {
+              quantity: item.quantity, // ilość sprzedaży
+              revenue: totalRevenueForItem, // całkowity przychód
+            },
+          },
         });
       }
     });
@@ -736,6 +855,8 @@ app.post('/submit-order', async (req, res) => {
     res.status(500).json({ message: 'Błąd zapisu zamówienia' });
   }
 });
+
+
 
 // app.delete('/delete-user', async (req, res) => {
 //   const { email } = req.body; 

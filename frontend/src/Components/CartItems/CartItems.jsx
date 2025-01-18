@@ -127,7 +127,7 @@ const CartItems = () => {
         };
 
         fetchUserCart();
-    }, [user, setCartItems]);
+    }, [user, cartItems]);
 
     const handleRemoveFromCart = async (productId) => {
         if (!user) {
@@ -205,35 +205,99 @@ const CartItems = () => {
         }
     };
 
-    const handleQuantityChange = (productId, newQuantity) => {
-        if (newQuantity < 1) {
-            setMessage({ text: "Quantity must be at least 1.", type: 'message' });
-            return;
-        }
+//     const handleQuantityChange = (productId, newQuantity) => {
+//         console.log("tutaj", newQuantity)
+//         if (!productId || typeof newQuantity !== 'number' || newQuantity < 1) {
+//             console.log("blad")
+//             return;
+//         }
+        
+//         if (newQuantity < 1) {
+
+//             setMessage({ text: "Quantity must be at least 1.", type: 'message' });
+//             return;
+//         }
+//         // const updatedCart={...userCart, [produktId]: newQuantity}
+//         // setUserCary(updatedCart)
+//         const updatedCartItems = { ...cartItems, [productId]: newQuantity };
     
-        const updatedCartItems = { ...cartItems, [productId]: newQuantity };
-    
-        setCartItems(updatedCartItems);
-        if (user) {
-            const email = user.email;
-            fetch('http://localhost:5055/update-cart', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, productId, quantity: newQuantity }),
-            })
+//         // setCartItems(updatedCartItems);
+//         // setCartItems(prevCartItems => ({ ...prevCartItems, [productId]: newQuantity }));
+//         const previousCartItems = { ...cartItems }; // Zachowaj poprzedni stan koszyka
+
+// setCartItems(prevCartItems => ({ ...prevCartItems, [productId]: newQuantity }));
+// if (updateUserCart) {
+//     updateUserCart(productId, newQuantity);
+// }
+//         console.log("u", updatedCartItems)
+//         if (user) {
+//             const email = user.email;
+//             fetch('http://localhost:5055/update-cart', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//                 body: JSON.stringify({ email, productId, quantity: newQuantity }),
+//             })
+//             .then(response => response.json())
+//             // .then(data => {
+//             //     if (data.success) {
+//             //         console.log("Cart updated successfully");
+//             //     } else {
+//             //         console.log("Error updating cart", data.message);
+//             //     }
+//             // })
+//             .then(data => {
+//                 console.log("Response data:", data); // Debugowanie odpowiedzi
+//                 if (data.message === "Cart updated successfully") {
+//                     console.log("Cart updated successfully");
+//                 } else {
+//                     console.error("Error updating cart:", data.message || "Unknown error");
+//                     setMessage({ text: data.message || "Error syncing with server.", type: 'error' });
+//                 }
+//             })            
+//             .catch(error => console.error("Error updating cart:", error));
+//         }
+//     };
+
+const handleQuantityChange = (productId, newQuantity) => {
+    if (typeof newQuantity !== 'number' || newQuantity < 1) {
+        setMessage({ text: "Ilość musi być co najmniej 1.", type: 'error' });
+        return;
+    }
+
+    // Natychmiastowa aktualizacja stanu lokalnego
+    const updatedCartItems = { ...cartItems, [productId]: newQuantity };
+    setCartItems(updatedCartItems);
+
+    // Jeśli użytkownik jest zalogowany, wysyłamy zmiany na serwer
+    if (user && user.email) {
+        const email = user.email;
+        fetch('http://localhost:5055/update-cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, productId, quantity: newQuantity }),
+        })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    console.log("Cart updated successfully");
+                if (data.message === "Cart updated successfully") {
+                    setMessage({ text: "Koszyk zaktualizowano pomyślnie.", type: 'success' });
                 } else {
-                    console.log("Error updating cart", data.message);
+                    // Przywrócenie poprzedniego stanu w razie błędu
+                    setCartItems((prev) => ({ ...prev, [productId]: cartItems[productId] }));
+                    setMessage({ text: data.message || "Błąd podczas aktualizacji koszyka.", type: 'error' });
                 }
             })
-            .catch(error => console.error("Error updating cart:", error));
-        }
-    };
+            .catch(error => {
+                console.error("Błąd podczas aktualizacji koszyka:", error);
+                setCartItems((prev) => ({ ...prev, [productId]: cartItems[productId] }));
+                setMessage({ text: "Nie udało się zaktualizować koszyka. Spróbuj ponownie.", type: 'error' });
+            });
+    }
+};
+
     
 
     return (
@@ -260,11 +324,9 @@ const CartItems = () => {
                                 type="number"
                                 min="1"
                                 value={cartItems[e.id] || 1} 
-                                onChange={(event) => {
-                                    console.log(e.id);  
-                                    handleQuantityChange(e.id, parseInt(event.target.value)); 
-                                }}
+                                onChange={(event) => handleQuantityChange(e.id, parseInt(event.target.value))}
                             />
+
                             <p>${e.new_price * (cartItems[e.id] || 1)}</p>
                             <img
                                 className="cartitems-remove-icon"
@@ -301,6 +363,7 @@ const CartItems = () => {
                     </div>
                     <div>
                         <button onClick={handleProceedToCheckout}>PROCEED TO CHECKOUT</button>
+                        {console.log("User cart", userCart)}
                         {showOrder && <Order totalAmount={finalTotal} clearCart={clearCart} cartItems={userCart} />}
 
                     </div>
