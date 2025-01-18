@@ -23,7 +23,7 @@ const CartItems = () => {
     useEffect(() => {
         const fetchPromoCodes = async () => {
             try {
-                const response = await fetch(`http://localhost:5055/get-sale-codes?email=${encodeURIComponent(email)}`, {
+                const response = await fetch(`/api/get-sale-codes?email=${encodeURIComponent(email)}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const CartItems = () => {
             const email = user.email;
 
             try {
-                const response = await fetch('http://localhost:5055/remove-sale-code', {
+                const response = await fetch('/api/remove-sale-code', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ const CartItems = () => {
             const email = user.email;
 
             try {
-                const response = await fetch('http://localhost:5055/get-cart', {
+                const response = await fetch('/api/get-cart', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ const CartItems = () => {
         const email = user.email;
 
         try {
-            const response = await fetch('http://localhost:5055/remove-from-cart', {
+            const response = await fetch('/api/remove-from-cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ const CartItems = () => {
         
         const email = user.email; 
         try {
-            const response = await fetch('http://localhost:5055/clear-cart', {
+            const response = await fetch('/api/clear-cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -364,7 +364,7 @@ const handleQuantityChange = (productId, newQuantity) => {
                     <div>
                         <button onClick={handleProceedToCheckout}>PROCEED TO CHECKOUT</button>
                         {console.log("User cart", userCart)}
-                        {showOrder && <Order totalAmount={finalTotal} clearCart={clearCart} cartItems={userCart} />}
+                        {showOrder && <Order id={user.id} totalAmount={finalTotal} clearCart={clearCart} cartItems={userCart} />}
 
                     </div>
                 </div>

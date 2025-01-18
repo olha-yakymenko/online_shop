@@ -8,7 +8,7 @@ const ProductContextProvider = ({ children }) => {
 
 const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5055/products');
+        const response = await fetch('/api/products');
         const data = await response.json();
         console.log(data)
         setAllProduct(data);

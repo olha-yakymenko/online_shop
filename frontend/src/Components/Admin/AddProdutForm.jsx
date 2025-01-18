@@ -39,8 +39,10 @@ const AddProductForm = ({ onSuccess }) => {
       formData.append('image', values.image);
 
       try {
-        const response = await fetch('http://localhost:5055/add-product', {
-          method: 'POST',
+        // const response = await fetch('http://localhost:5055/add-product', {
+        const response = await fetch('/api/add-product', {
+
+        method: 'POST',
           body: formData,
         });
         console.log(formData)

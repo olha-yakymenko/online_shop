@@ -19,6 +19,7 @@ const AdminNavbar = () => {
         <Button color="inherit" component={Link} to="/admin" className="nav-menu-link">Store Status</Button>
         <Button color="inherit" component={Link} to="/admin/report" className="nav-menu-link">Generate Report</Button>
         <Button color="inherit" component={Link} to="/admin/user-panel" className="user-panel">User Panel</Button>
+        <Button color="inherit" component={Link} to="/admin/order-panel" className="order-panel">Orders</Button>
         <Button color="inherit" onClick={logoutUser} component={Link} to="/" className="logout-button">Log Out</Button>
       </Toolbar>
     </AppBar>

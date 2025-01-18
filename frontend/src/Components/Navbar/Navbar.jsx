@@ -50,7 +50,6 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="nav-logo">
-        <img src={logo} alt="logo" />
         <p>YAK</p>
       </div>
 
@@ -105,6 +104,7 @@ const Navbar = () => {
         ) : (
           <>
             <Link to='/cart'><img src={cart_icon} alt="Cart" /></Link>
+            <Link to='/order'><img src={logo} alt="Orders" /></Link>
             <button onClick={handleLogout} className="logout-button">Logout</button>
           </>
         )}

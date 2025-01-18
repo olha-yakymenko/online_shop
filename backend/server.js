@@ -10,7 +10,7 @@ const { Op } = require('sequelize');
 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:1111'], 
+  origin: ['http://localhost:3000', 'https://localhost:1111'], 
   methods: 'GET, POST, PUT, DELETE', 
   credentials: true 
 }));
@@ -22,8 +22,8 @@ const Cart = require('./models/Cart');
 const Sale = require('./models/Sale');
 const Product = require('./models/Product')
 const ProductComments = require('./models/ProductComments')
-
-app.post('/login', async (req, res) => {
+const Order = require('./models/Order')
+app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -59,7 +59,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   try {
@@ -195,7 +195,7 @@ app.post('/register', async (req, res) => {
 //   }
 // });
 
-app.post('/logout', async (req, res) => {
+app.post('/api/logout', async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -235,7 +235,7 @@ app.post('/logout', async (req, res) => {
 // });
 
 
-app.get('/isAuthenticated', async (req, res) => {
+app.get('/api/isAuthenticated', async (req, res) => {
   const { email } = req.query;
 
   try {
@@ -274,7 +274,7 @@ app.get('/isAuthenticated', async (req, res) => {
 //   }
 // });
 
-app.get('/cart', async (req, res) => {
+app.get('/api/cart', async (req, res) => {
   const { email } = req.query;
 
   try {
@@ -321,7 +321,7 @@ app.get('/cart', async (req, res) => {
 //   }
 // });
 
-app.post('/get-cart', async (req, res) => {
+app.post('/api/get-cart', async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -388,7 +388,7 @@ app.post('/get-cart', async (req, res) => {
 //   }
 // });
 
-app.post('/add-to-cart', async (req, res) => {
+app.post('/api/add-to-cart', async (req, res) => {
   const { email, productId } = req.body;
 
   try {
@@ -463,7 +463,7 @@ app.post('/add-to-cart', async (req, res) => {
 // });
 
 
-app.post('/update-cart', async (req, res) => {
+app.post('/api/update-cart', async (req, res) => {
   const { email, productId, quantity } = req.body;
 
   try {
@@ -526,7 +526,7 @@ app.post('/update-cart', async (req, res) => {
 //   }
 // });
 
-app.post('/remove-from-cart', async (req, res) => {
+app.post('/api/remove-from-cart', async (req, res) => {
   const { email, productId } = req.body;
 console.log(email)
 console.log(productId)
@@ -580,7 +580,7 @@ console.log(productId)
 //   }
 // });
 
-app.post('/clear-cart', async (req, res) => {
+app.post('/api/clear-cart', async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -653,7 +653,7 @@ console.log('Plik do zapisu:', plik);
 // });
 
 
-app.post('/save-product', async (req, res) => {
+app.post('/api/save-product', async (req, res) => {
   console.log(req.body)
   const { id, isavailable, popular, new: isNew } = req.body;
   console.log(id, isavailable, popular, isNew);
@@ -698,32 +698,28 @@ const salesDataPath = './sales_data.json';
 //   }
 // });
 
-app.get('/sales-report', async (req, res) => {
+app.get('/api/sales-report', async (req, res) => {
   const { startDate, endDate } = req.query;
 
   try {
     const data = await fs.readFile(salesDataPath, 'utf-8');
     const sales = JSON.parse(data);
-    console.log('Sales data:', sales);  // Debugowanie - sprawdzamy dane
+    console.log('Sales data:', sales);  
 
-    // Przekształcenie daty startowej i końcowej na obiekty Date (porównanie na podstawie stringów)
-    const start = startDate ? new Date(startDate) : new Date(0); // Jeśli brak startDate, domyślnie 1970
-    const end = endDate ? new Date(endDate) : new Date(); // Jeśli brak endDate, domyślnie teraz
+    const start = startDate ? new Date(startDate) : new Date(0); 
+    const end = endDate ? new Date(endDate) : new Date(); 
 
     console.log('Start date:', start);
     console.log('End date:', end);
 
-    // Przekształcamy daty na format 'YYYY-MM-DD' do porównań
     const formatDate = (date) => new Date(date).toISOString().split('T')[0];
 
-    // Filtrujemy sprzedaż na podstawie dat
     const filteredSales = sales.map((sale) => {
-      // Przekształcamy sprzedaż w mapę dat => { ilość, przychód }
       const filteredSalesForProduct = Object.entries(sale.sales)
         .filter(([date, { quantity, revenue }]) => {
           const saleDate = new Date(date);
           console.log('Sale date:', saleDate);
-          return saleDate >= start && saleDate <= end; // Sprawdzamy, czy data sprzedaży mieści się w przedziale
+          return saleDate >= start && saleDate <= end; 
         })
         .map(([date, { quantity, revenue }]) => ({
           date,
@@ -731,7 +727,6 @@ app.get('/sales-report', async (req, res) => {
           revenue,
         }));
 
-      // Jeśli produkt ma sprzedaż w wybranym okresie, zwracamy zaktualizowane dane
       if (filteredSalesForProduct.length > 0) {
         const totalQuantity = filteredSalesForProduct.reduce((acc, { quantity }) => acc + quantity, 0);
         const totalRevenue = filteredSalesForProduct.reduce((acc, { revenue }) => acc + revenue, 0);
@@ -743,10 +738,10 @@ app.get('/sales-report', async (req, res) => {
           sales: filteredSalesForProduct,
         };
       }
-      return null; // Jeśli brak sprzedaży w tym okresie, zwróć null
-    }).filter(Boolean); // Usuwamy produkty, które nie miały sprzedaży w danym okresie
+      return null; 
+    }).filter(Boolean); 
 
-    console.log('Filtered sales:', filteredSales);  // Debugowanie - sprawdzamy przefiltrowane dane
+    console.log('Filtered sales:', filteredSales);  
 
     res.json(filteredSales);
   } catch (err) {
@@ -792,7 +787,7 @@ app.get('/sales-report', async (req, res) => {
 //     res.status(500).json({ message: 'Błąd zapisu zamówienia' });
 //   }
 // });
-app.post('/submit-order', async (req, res) => {
+app.post('/api/submit-order', async (req, res) => {
   const { address, contactInfo, paymentMethod, totalAmount, cartItems } = req.body;
   console.log('Received order:', req.body);
 
@@ -806,42 +801,35 @@ app.post('/submit-order', async (req, res) => {
 
     const currentSalesData = JSON.parse(await fs.readFile(salesDataPath, 'utf8'));
 
-    // Funkcja do obliczenia formatu daty bez czasu (np. YYYY-MM-DD)
     const formatDate = (date) => new Date(date).toISOString().split('T')[0];
 
     cartItems.forEach((item) => {
       const existingProduct = currentSalesData.find((product) => product.name === item.name);
 
-      // Zapisujemy datę transakcji jako "YYYY-MM-DD"
       const transactionDate = formatDate(new Date().toISOString());
       const totalRevenueForItem = item.quantity * item.price; // Całkowity przychód dla tego produktu
 
       if (existingProduct) {
-        // Jeśli produkt już istnieje, sprawdzamy, czy ta data już istnieje
         if (existingProduct.sales[transactionDate]) {
-          // Jeśli data istnieje, zwiększamy ilość sprzedaży i przychód
           existingProduct.sales[transactionDate].quantity += item.quantity;
           existingProduct.sales[transactionDate].revenue += totalRevenueForItem;
         } else {
-          // Jeśli data nie istnieje, tworzymy nową parę data:ilość i data:przychód
           existingProduct.sales[transactionDate] = {
             quantity: item.quantity,
             revenue: totalRevenueForItem,
           };
         }
-        // Aktualizujemy całkowitą ilość i przychód produktu
         existingProduct.totalQuantity += item.quantity;
         existingProduct.totalRevenue += totalRevenueForItem;
       } else {
-        // Jeśli produkt nie istnieje, tworzymy nowy obiekt produktu
         currentSalesData.push({
           name: item.name,
           totalQuantity: item.quantity,
           totalRevenue: totalRevenueForItem,
           sales: {
             [transactionDate]: {
-              quantity: item.quantity, // ilość sprzedaży
-              revenue: totalRevenueForItem, // całkowity przychód
+              quantity: item.quantity, 
+              revenue: totalRevenueForItem, 
             },
           },
         });
@@ -882,7 +870,7 @@ app.post('/submit-order', async (req, res) => {
 //   }
 // });
 
-app.delete('/delete-user', async (req, res) => {
+app.delete('/api/delete-user', async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -1022,7 +1010,7 @@ const generateSaleCode = () => {
 //   }
 // });
 
-app.post('/add-sale-code', async (req, res) => {
+app.post('/api/add-sale-code', async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -1086,7 +1074,7 @@ app.post('/add-sale-code', async (req, res) => {
 //   }
 // });
 
-app.delete('/remove-sale-code', async (req, res) => {
+app.delete('/api/remove-sale-code', async (req, res) => {
   const { email, saleCode } = req.body;
   
   try {
@@ -1143,7 +1131,7 @@ app.delete('/remove-sale-code', async (req, res) => {
 // });
 
 
-app.get('/get-sale-codes', async (req, res) => {
+app.get('/api/get-sale-codes', async (req, res) => {
   const { email } = req.query;  
   console.log(email);
 
@@ -1189,7 +1177,7 @@ app.get('/get-sale-codes', async (req, res) => {
 //   }
 // });
 
-app.get('/get-users', async (req, res) => {
+app.get('/api/get-users', async (req, res) => {
   try {
     const users = await User.findAll({
       where: {
@@ -1207,7 +1195,7 @@ app.get('/get-users', async (req, res) => {
   }
 });
 
-app.get('/product/:id', async (req, res) => {
+app.get('/api/product/:id', async (req, res) => {
   const productId = req.params.id;
 
   try {
@@ -1230,7 +1218,7 @@ app.get('/product/:id', async (req, res) => {
   }
 });
 
-app.get('/products', async (req, res) => {
+app.get('/api/products', async (req, res) => {
   try {
     const products = await Product.findAll();
 
@@ -1252,7 +1240,7 @@ app.get('/products', async (req, res) => {
   }
 });
 
-app.post('/add-comment', async (req, res) => {
+app.post('/api/add-comment', async (req, res) => {
   const { product_id, user_name, comment, rating } = req.body;
   console.log(req.body)
   if (!product_id || !user_name || !comment || rating === undefined) {
@@ -1320,7 +1308,7 @@ const upload = multer({ storage: storage });
 //   }
 // });
 
-app.put('/update-product', upload.single('image'), async (req, res) => {
+app.put('/api/update-product', upload.single('image'), async (req, res) => {
   const { 
     id, 
     name, 
@@ -1386,7 +1374,7 @@ app.put('/update-product', upload.single('image'), async (req, res) => {
 });
 
 
-app.post('/add-product', upload.single('image'), async (req, res) => {
+app.post('/api/add-product', upload.single('image'), async (req, res) => {
   const { 
     name, 
     category, 
@@ -1424,7 +1412,7 @@ app.post('/add-product', upload.single('image'), async (req, res) => {
   }
 });
 
-app.delete('/delete-product/:id', async (req, res) => {
+app.delete('/api/delete-product/:id', async (req, res) => {
   const { id } = req.params; 
 
   if (!id) {
@@ -1445,6 +1433,115 @@ app.delete('/delete-product/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting product:', error);
     res.status(500).json({ success: false, message: 'Failed to delete product' });
+  }
+});
+
+app.post('/api/orders', async (req, res) => {
+  const { user_id, products, address, status, price } = req.body;
+
+  if (!user_id || !products || !address) {
+    return res.status(400).json({ message: 'Wszystkie dane są wymagane!' });
+  }
+
+  const orderStatus = status || 'Przyjęte';
+
+  try {
+    const newOrder = await Order.create({
+      user_id,
+      status: orderStatus,
+      products,
+      address,
+      price
+    });
+
+    res.status(201).json(newOrder);
+  } catch (error) {
+    console.error('Błąd podczas tworzenia zamówienia:', error);
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+});
+
+app.get('/api/orders/user/:userId', async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const userOrders = await Order.findAll({
+      where: {
+        user_id: userId,
+      },
+      attributes: ['id', 'user_id', 'status', 'products', 'address', 'created_at', 'updated_at', 'price'],
+    });
+
+    if (userOrders.length === 0) {
+      return res.status(200).json({ message: 'Nie znaleziono zamówień dla tego użytkownika' });
+    }
+
+    const ordersWithProductNames = [];
+
+    for (const order of userOrders) {
+      const productIds = order.products; 
+
+      const products = await Product.findAll({
+        where: {
+          id: productIds,
+        },
+        attributes: ['id', 'name'], 
+      });
+
+      const productNames = products.map((product) => product.name);
+      console.log(productNames)
+
+      ordersWithProductNames.push({
+        ...order.toJSON(), 
+        products: productNames,
+      });
+    }
+
+    res.status(200).json(ordersWithProductNames);
+  } catch (error) {
+    console.error('Błąd podczas pobierania zamówień:', error);
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+});
+
+
+
+app.get('/api/orders', async (req, res) => {
+  try {
+    const allOrders = await Order.findAll({
+      attributes: ['id', 'user_id', 'status', 'products', 'address', 'created_at', 'updated_at', 'price'],
+    });
+
+    if (allOrders.length === 0) {
+      return res.status(404).json({ message: 'Brak zamówień w systemie' });
+    }
+
+    res.status(200).json(allOrders);
+  } catch (error) {
+    console.error('Błąd podczas pobierania zamówień:', error);
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+});
+
+app.put('/api/orders/:id', async (req, res) => {
+  const { id } = req.params; 
+  const { status } = req.body; 
+
+  try {
+    const order = await Order.findByPk(id);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Zamówienie nie zostało znalezione' });
+    }
+
+    order.status = status;
+
+    await order.save();
+
+    res.status(200).json({ message: 'Status zamówienia został zmieniony', order });
+  } catch (error) {
+    console.error('Błąd podczas zmiany statusu:', error);
+    res.status(500).json({ message: 'Błąd serwera' });
   }
 });
 

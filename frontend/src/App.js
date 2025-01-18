@@ -18,6 +18,8 @@ import  ShopContext  from './Context/ShopContext';
 import AdminNavbar from './Components/Navbar/AdminNavbar';
 import AdminUserPanel from './Components/Admin/AdminUserPanel';
 import  ProductContext from './Context/ProductContext'
+import OrderList from './Components/Order/OrderList'
+import OrderComponent from './Components/Admin/OrderComponent'
 const queryClient = new QueryClient();
 
 const AppContent = () => {
@@ -43,8 +45,10 @@ const AppContent = () => {
             <Route path="/admin" element={<ProductList />} />
             <Route path="/admin/report" element={<SalesReport />} />
             <Route path="/admin/user-panel" element={<AdminUserPanel/>} />
+            <Route path="/admin/order-panel" element={<OrderComponent/>} />
           </>
         )}
+        <Route path="/order" element={<OrderList/>} />
       </Routes>
     </BrowserRouter>
   );

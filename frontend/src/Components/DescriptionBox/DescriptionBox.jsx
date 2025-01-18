@@ -143,7 +143,7 @@ const DescriptionBox = ({ product }) => {
 
     if (newComment.trim() && newRating >= 1 && newRating <= 5) {
         try {
-            const response = await fetch('http://localhost:5055/add-comment', {
+            const response = await fetch('/api/add-comment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -169,7 +169,7 @@ const DescriptionBox = ({ product }) => {
                 setMessage({ text: 'Comment added successfully', type: 'success' });
 
                 try {
-                  const updateResponse = await fetch('http://localhost:5055/update-product', {
+                  const updateResponse = await fetch('/api/update-product', {
                       method: 'PUT',
                       headers: {
                           'Content-Type': 'application/json',

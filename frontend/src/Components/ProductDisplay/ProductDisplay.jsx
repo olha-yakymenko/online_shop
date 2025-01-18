@@ -32,7 +32,7 @@ const ProductDisplay = (props) => {
         }
     
         try {
-            const response = await fetch('http://localhost:5055/update-product', {
+            const response = await fetch('/api/update-product', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const ProductDisplay = (props) => {
         }
 
         try {
-            const response = await fetch('http://localhost:5055/add-to-cart', {
+            const response = await fetch('/api/add-to-cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

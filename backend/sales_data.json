@@ -65,5 +65,16 @@
         "revenue": 510
       }
     }
+  },
+  {
+    "name": "Women Blouse with flowers",
+    "totalQuantity": 1,
+    "totalRevenue": 65,
+    "sales": {
+      "2025-01-18": {
+        "quantity": 1,
+        "revenue": 65
+      }
+    }
   }
 ]

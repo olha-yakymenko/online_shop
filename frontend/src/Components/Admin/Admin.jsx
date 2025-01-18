@@ -27,7 +27,7 @@ console.log(all_product)
     console.log('Wysyłam na serwer:', wys);
 
     try {
-      const response = await fetch('http://localhost:5055/save-product', {
+      const response = await fetch('/api/save-product', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ console.log(all_product)
   const saveEditsToServer = async () => {
     console.log(formValues)
     try {
-      const response = await fetch('http://localhost:5055/update-product', {
+      const response = await fetch('/api/update-product', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ console.log(all_product)
 
   const deleteProduct = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5055/delete-product/${id}`, {
+      const response = await fetch(`/api/delete-product/${id}`, {
         method: 'DELETE'
       });
 
