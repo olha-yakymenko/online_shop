@@ -1,14 +1,7 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
-const fs = require('fs').promises;
-const cors = require('cors'); 
 const router = express.Router();
-const nodemailer=require('nodemailer')
-const path = require('path');
-const bodyParser = require('body-parser');
 const { Op } = require('sequelize');
 const User = require('../models/User');
-const Cart = require('../models/Cart');
 const Sale = require('../models/Sale');
 const Product = require('../models/Product')
 const ProductComments = require('../models/ProductComments')

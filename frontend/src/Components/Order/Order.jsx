@@ -2,7 +2,7 @@ import React, { useReducer, useState, useCallback, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { ProductContext } from '../../Context/ProductContext'; 
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import './Order.css';
 import useMessageHandler from '../Admin/hooks/useMessageHandler';
 
@@ -46,7 +46,6 @@ const validationSchemas = [
 const Order = ({ id, totalAmount, clearCart, cartItems }) => {
   const [state, dispatch] = useReducer(formReducer, initialState);
   const [loading, setLoading] = useState(false);
-  const queryClient = useQueryClient();
   const {message, setMessage} = useMessageHandler();
   const { all_product } = useContext(ProductContext);
 
@@ -108,7 +107,6 @@ const Order = ({ id, totalAmount, clearCart, cartItems }) => {
         setMessage( "Order successfully placed. Confirmation email sent.",'message');
         await clearCart();
         dispatch({ type: "RESET" });
-        queryClient.invalidateQueries('cart');
       },
       onError: (error) => {
         setMessage(error.message, 'error' );

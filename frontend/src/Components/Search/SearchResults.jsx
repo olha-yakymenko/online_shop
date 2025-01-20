@@ -5,7 +5,6 @@ import Item from "../Item/Item";
 
 const SearchResults = () => {
     const { searchResults } = useContext(SearchContext);
-
     const [sortCriteria, setSortCriteria] = useState("price_asc");
     const [filters, setFilters] = useState({
         size: [],

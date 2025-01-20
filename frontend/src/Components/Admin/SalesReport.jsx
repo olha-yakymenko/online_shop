@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import useMessageHandler from './hooks/useMessageHandler'
 
 const SalesReport = () => {

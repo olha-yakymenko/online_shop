@@ -4,10 +4,7 @@ const nodemailer=require('nodemailer')
 const router = express.Router();
 const User = require('../models/User');
 const Cart = require('../models/Cart');
-const Sale = require('../models/Sale');
-const Product = require('../models/Product')
-const ProductComments = require('../models/ProductComments')
-const Order = require('../models/Order')
+
 router.get('/api/cart', async (req, res) => {
     const { email } = req.query;
   

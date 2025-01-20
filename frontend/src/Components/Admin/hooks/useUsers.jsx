@@ -14,10 +14,11 @@ const useUsers = () => {
     return response.json();
   };
 
-  const { data: users, refetch: refetchUsers } = useQuery('users', fetchUsers, {
+  const { data: users } = useQuery('users', fetchUsers, {
     onError: (err) => setError(err.message),
     refetchOnWindowFocus: false,
   });
+  
   const addSaleCodeMutation = useMutation(
     async (email) => {
       const response = await fetch('/api/add-sale-code', {
