@@ -1,20 +1,22 @@
 .search-results-page {
     margin: 0 50px;
     margin-top: 40px;
-    width: 100%
+    width: 100%;
 }
-.search-main{
+
+.search-main {
     display: flex;
 }
+
 .search-results-page h2 {
     font-size: 24px;
     font-weight: 600;
-    margin: 20px 0; 
+    margin: 20px 0;
 }
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
+    grid-template-columns: repeat(4, 1fr);
     row-gap: 80px;
     gap: 30px;
     margin: 20px 0;
@@ -49,32 +51,9 @@
     color: #787878;
     font-size: 18px;
     font-weight: 500;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
-@media (max-width: 768px) {
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr); 
-    }
-    .search-results-page {
-        margin: 0 20px; 
-    }
-}
-
-@media (max-width: 480px) {
-    .products-grid {
-        grid-template-columns: 1fr; 
-    }
-    .search-results-page h2 {
-        font-size: 20px; 
-    }
-}
-
-.sort-button {
-    padding: 10px 20px;
-    border-radius: 40px;
-    border: 1px solid #888;
-}
 
 .filters-section {
     margin: 30px;
@@ -86,8 +65,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width : 300px;
-    height:600px
+    width: 300px;
+    height: 550px;
 }
 
 .filters-section h4 {
@@ -117,7 +96,7 @@
 .filters-section input[type="checkbox"] {
     width: 16px;
     height: 16px;
-    accent-color: #FF4141; 
+    accent-color: #FF4141;
 }
 
 .filters-section input[type="range"] {
@@ -167,28 +146,151 @@
     color: #FF4141;
 }
 
-@media (max-width: 768px) {
-    .filters-section {
-        margin: 20px 10px;
-        padding: 15px;
-        height: 900px;
+@media (max-width: 1200px) {
+    .search-results-page {
+        margin: 0 30px;
     }
 
-    .filters-section div {
+    .search-category-sort {
+        margin: 0 50px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 20px;
+    }
+
+    .filters-section {
+        width: 250px;
+        height:600px;
+    }
+
+    .filters-section h4 {
+        font-size: 18px;
+    }
+
+    .filters-section h5 {
+        font-size: 14px;
+    }
+
+    .filters-section label {
+        font-size: 12px;
+    }
+
+    .filters-section input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+    }
+
+    .search-results-page .load-more {
+        width: 200px;
+        height: 60px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-results-page {
+        margin: 0 20px;
+    }
+
+    .search-category-sort {
+        margin: 0 20px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr); 
+        row-gap: 50px;
+        gap: 20px;
+    }
+
+    .filters-section {
+        width: 250px;
+        height: auto;
+    }
+
+    .filters-section h4 {
+        font-size: 18px;
+    }
+
+    .filters-section h5 {
+        font-size: 14px;
+    }
+
+    .filters-section label {
+        font-size: 12px;
+    }
+
+    .filters-section input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+    }
+
+    .search-results-page .load-more {
+        width: 200px;
+        height: 60px;
+        font-size: 16px;
+    }
+
+    .search-main {
         flex-direction: column;
     }
 
-    .shopcategory-indexSort {
+    .search-category-sort {
         flex-direction: column;
         align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .filters-section {
+        margin: 20px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-results-page {
+        margin: 0 10px;
+    }
+
+    .search-main {
+        flex-direction: column;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr; 
         gap: 15px;
     }
 
-    .shopcategory-products {
-        grid-template-columns: 1fr 1fr;
+    .search-category-sort {
+        margin: 0 10px;
     }
 
-    .shopcategory-loadmore {
-        margin: 50px auto;
+    .filters-section {
+        width: 80%;
+        height: auto;
+        margin: 10px 0;
+    }
+
+    .filters-section h4 {
+        font-size: 16px;
+    }
+
+    .filters-section h5 {
+        font-size: 12px;
+    }
+
+    .filters-section label {
+        font-size: 10px;
+    }
+
+    .filters-section input[type="checkbox"] {
+        width: 12px;
+        height: 12px;
+    }
+
+    .search-results-page .load-more {
+        width: 180px;
+        height: 55px;
+        font-size: 14px;
     }
 }

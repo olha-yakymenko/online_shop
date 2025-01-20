@@ -4,18 +4,16 @@ import useMessageHandler from './hooks/useMessageHandler';
 
 const AdminUserPanel = () => {
   const { users, addSaleCode, removeSaleCode, removeUser, fetchSaleCodes } = useUsers();
-  const { message, error, setMessage, setError } = useMessageHandler();
-  
+  const { message, setMessage, getMessageStyle } = useMessageHandler();
+
   const [codes, setCodes] = useState({});
 
   const loadSaleCodes = async (email) => {
     try {
-      console.log(email)
-      const saleCodes =  await fetchSaleCodes(email);
-      console.log(saleCodes)
+      const saleCodes = await fetchSaleCodes(email); 
       setCodes((prevCodes) => ({ ...prevCodes, [email]: saleCodes }));
     } catch (err) {
-      setError('Failed to load sale codes');
+      setMessage('Failed to load sale codes', 'error');
     }
   };
 
@@ -23,13 +21,55 @@ const AdminUserPanel = () => {
     users.forEach((user) => {
       loadSaleCodes(user.email);
     });
-  }, [users]); 
+  }, [users]);
+
+  const handleAddSaleCode = async (email) => {
+    try {
+      const response = await addSaleCode.mutateAsync(email); 
+      console.log("Response from backend:", response); 
+
+      if (response && response.saleCode) {
+        const saleCode = response.saleCode; 
+
+        setCodes((prevCodes) => {
+          const updatedCodes = { ...prevCodes };
+          updatedCodes[email] = updatedCodes[email] ? [...updatedCodes[email], saleCode] : [saleCode];
+          return updatedCodes;
+        });
+
+        setMessage(`Sale code ${saleCode} added for ${email}`);
+      } else {
+        setMessage('Sale code was not returned from the backend', 'error');
+      }
+    } catch (error) {
+      console.error("Error during addSaleCode:", error);
+      setMessage(error.message, 'error');
+    }
+  };
+
+  const handleRemoveSaleCode = async (email, saleCode) => {
+    try {
+      await removeSaleCode({ email, saleCode });  
+
+      setCodes((prevCodes) => {
+        const updatedCodes = { ...prevCodes };
+        updatedCodes[email] = updatedCodes[email]?.filter((code) => code !== saleCode) || [];
+        return updatedCodes;
+      });
+
+      setMessage(`Sale code ${saleCode} removed for ${email}`);
+    } catch (error) {
+      setMessage(error.message, 'error');
+    }
+  };
 
   return (
     <div className="admin-panel">
       <h1>Administrator Panel</h1>
-      {message && <p style={{ color: 'green' }}>{message}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      {message.text && (
+        <p style={getMessageStyle()}>{message.text}</p>
+      )}
 
       <table>
         <thead>
@@ -54,7 +94,7 @@ const AdminUserPanel = () => {
                       codes[user.email].map((code, index) => (
                         <li key={index}>
                           {code}{" "}
-                          <button onClick={() => removeSaleCode(user.email, code)}>
+                          <button onClick={() => handleRemoveSaleCode(user.email, code)}>
                             Remove
                           </button>
                         </li>
@@ -65,7 +105,7 @@ const AdminUserPanel = () => {
                   </ul>
                 </td>
                 <td>
-                  <button onClick={() => addSaleCode(user.email)}>Add Sale Code</button>
+                  <button onClick={() => handleAddSaleCode(user.email)}>Add Sale Code</button>
                   <button onClick={() => removeUser(user.email)} style={{ color: 'white' }}>
                     Remove User
                   </button>
@@ -84,4 +124,3 @@ const AdminUserPanel = () => {
 };
 
 export default AdminUserPanel;
-

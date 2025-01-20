@@ -3,14 +3,15 @@ import { UserContext } from '../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import './CSS/LoginSignup.css'
+import useMessageHandler from '../Components/Admin/hooks/useMessageHandler';
+
 const Login = ({ switchToRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [message, setMessage] = useState({ text: '', type: '' });
+  const { message, setMessage } = useMessageHandler();
   const { loginUser } = useContext(UserContext);  
   const navigate = useNavigate();  
-  const queryClient = useQueryClient(); 
 
   const mutation = useMutation(
     async (userData) => {
@@ -29,14 +30,13 @@ const Login = ({ switchToRegister }) => {
     },
     {
       onSuccess: (result) => {
-        localStorage.setItem('loggedUser', JSON.stringify(result.user));
         loginUser(result.user);
   
         if (result.user.role === 'admin') {
-          setMessage({ text: 'Admin login successful!', type: 'message' });
+          setMessage('Admin login successful!','message' );
           navigate('/admin');
         } else {
-          setMessage({ text: 'Login successful!', type: 'message' });
+          setMessage( 'Login successful!', 'message' );
           navigate('/');
         }
       },

@@ -13,7 +13,7 @@ body {
   }
   
   table {
-    width: 80%;
+    width: 90%;
     margin: 20px auto;
     border-collapse: collapse;
     background-color: white;
@@ -89,6 +89,7 @@ input[type="date"] {
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
+
 
   @media (max-width: 768px) {
     table {

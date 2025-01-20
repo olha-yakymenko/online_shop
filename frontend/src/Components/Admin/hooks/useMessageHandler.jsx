@@ -1,27 +1,33 @@
 import { useState } from 'react';
 
 const useMessageHandler = () => {
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState({ text: '', type: '' });
 
   const clearMessages = () => {
     setTimeout(() => {
-      setMessage('');
-      setError('');
+      setMessage({ text: '', type: '' });
     }, 3000);
+  };
+
+  const setMessageWithType = (msg, type = 'message') => {
+    setMessage({ text: msg, type });
+    clearMessages();
+  };
+  const getMessageStyle = () => {
+    switch (message.type) {
+      case 'message':
+        return { color: 'green', fontWeight: 'bold' };
+      case 'error':
+        return { color: 'red', fontWeight: 'bold' };
+      default:
+        return {};
+    }
   };
 
   return {
     message,
-    error,
-    setMessage: (msg) => {
-      setMessage(msg);
-      clearMessages();
-    },
-    setError: (err) => {
-      setError(err);
-      clearMessages();
-    },
+    setMessage: setMessageWithType,
+    getMessageStyle,
   };
 };
 

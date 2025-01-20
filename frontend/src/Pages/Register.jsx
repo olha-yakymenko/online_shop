@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-query';  
+import useMessageHandler from '../Components/Admin/hooks/useMessageHandler';
 import './CSS/LoginSignup.css'
 
 const registerUserApi = async (userData) => {
@@ -27,10 +28,10 @@ const Register = ({ switchToLogin }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
-  const [message, setMessage] = useState({ text: '', type: '' });
+  const {message, setMessage} = useMessageHandler();
   const { mutate, isLoading, isError, error: queryError } = useMutation(registerUserApi, {
     onSuccess: () => {
-      setMessage({ text: 'Registration successful!', type: 'message' });
+      setMessage('Registration successful!', 'message');
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -47,13 +48,13 @@ const Register = ({ switchToLogin }) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setMessage({ text: "Passwords don't match!", type: 'error' });
+      setMessage( "Passwords don't match!", 'error' );
       return;
     }
 
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(password)) {
-      setMessage({ text: "Password must be at least 8 characters long and contain a letter and a number.", type: 'error' });
+      setMessage("Password must be at least 8 characters long and contain a letter and a number.", 'error' );
       return;
     }
 

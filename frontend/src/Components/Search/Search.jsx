@@ -1,9 +1,7 @@
 import React, { useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
-// import all_product from "../Assets/all_product"; 
 import { ProductContext } from '../../Context/ProductContext'; 
-// import product_availability from "../Assets/availibility";
 import './Search.css';
 
 const Search = () => {
@@ -16,7 +14,6 @@ const Search = () => {
     const getAvailableProducts = () => {
         return all_product
             .map((item) => {
-                // const availability = product_availability.find(avail => avail.id === item.id);
                 return {
                     ...item,
                     isavailable: item ? item.isavailable : false,

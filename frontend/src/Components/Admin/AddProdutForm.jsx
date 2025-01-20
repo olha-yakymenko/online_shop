@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button, Checkbox, FormControl, FormLabel, FormGroup, InputLabel, Select, MenuItem, FormControlLabel, Box } from '@mui/material';
+import { ProductContext } from '../../Context/ProductContext';
 
 const AddProductForm = ({ onSuccess }) => {
   const [imagePreview, setImagePreview] = useState(null);
+  const { all_product } = useContext(ProductContext);
 
   const formik = useFormik({
     initialValues: {
@@ -29,23 +31,24 @@ const AddProductForm = ({ onSuccess }) => {
     }),
     onSubmit: async (values) => {
       const formData = new FormData();
+      const finalType = values.type === 'other' ? values.customType : values.type;
       formData.append('name', values.name);
       formData.append('category', values.category);
       formData.append('price', values.price);
-      formData.append('type', values.type)
+      formData.append('type', finalType); 
       formData.append('description', values.description);
-      formData.append('sizes', values.sizes);  
-      formData.append('colors', values.colors); 
+      values.sizes.forEach(size => formData.append('sizes[]', size));
+      values.colors.forEach(color => formData.append('colors[]', color));
       formData.append('image', values.image);
+      console.log(formData)
 
       try {
-        // const response = await fetch('http://localhost:5055/add-product', {
         const response = await fetch('/api/add-product', {
 
         method: 'POST',
           body: formData,
         });
-        console.log(formData)
+        console.log("wyslalem",formData)
 
 
         if (!response.ok) {
@@ -69,9 +72,12 @@ const AddProductForm = ({ onSuccess }) => {
     }
   };
 
-  const productTypes = [
-    "Jacket", "T-shirt", "Jeans", "Blouse", "Dress", "Skirt", "Shirt"
-  ];
+const productTypes  = all_product.reduce((categoryTypes, product) => {
+    if (product.type && !categoryTypes.includes(product.type)) {
+      categoryTypes.push(product.type);
+    }
+    return categoryTypes;
+  }, []);
 
   const handleSizeChange = (event) => {
     const { value } = event.target;
@@ -90,8 +96,8 @@ const AddProductForm = ({ onSuccess }) => {
   };
 
   return (
-    <Box component="form" onSubmit={formik.handleSubmit} sx={{ maxWidth: 600, margin: 'auto', padding: 3, border: '1px solid #ccc', borderRadius: 2 }}>
-      <h2>Dodaj Produkt</h2>
+    <Box component="form" onSubmit={formik.handleSubmit} sx={{ maxWidth: 800, width: '100%', margin: 'auto', padding: 3, border: '1px solid #ccc', borderRadius: 2 }}>
+      <h2>Add Product</h2>
 
       <TextField
         fullWidth
@@ -129,27 +135,46 @@ const AddProductForm = ({ onSuccess }) => {
         helperText={formik.touched.price && formik.errors.price}
         sx={{ marginBottom: 2 }}
       />
+        <FormControl fullWidth sx={{ marginBottom: 2 }}>
+          <InputLabel id="type-label">Typ produktu</InputLabel>
+          <Select
+            labelId="type-label"
+            id="type"
+            name="type"
+            value={formik.values.type}
+            onChange={formik.handleChange}
+            error={formik.touched.type && Boolean(formik.errors.type)}
+          >
+            {productTypes.map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
+            ))}
+            <MenuItem value="other">Inny typ</MenuItem> 
+          </Select>
 
-      <FormControl fullWidth sx={{ marginBottom: 2 }}>
-        <InputLabel id="type-label">Typ produktu</InputLabel>
-        <Select
-          labelId="type-label"
-          id="type"
-          name="type"
-          value={formik.values.type}
-          onChange={formik.handleChange}
-          error={formik.touched.type && Boolean(formik.errors.type)}
-        >
-          {productTypes.map((type) => (
-            <MenuItem key={type} value={type}>
-              {type}
-            </MenuItem>
-          ))}
-        </Select>
-        {formik.touched.type && formik.errors.type && (
-          <div style={{ color: 'red' }}>{formik.errors.type}</div>
-        )}
-      </FormControl>
+          {formik.values.type === 'other' && (
+            <TextField
+              id="custom-type"
+              name="customType"
+              label="Wpisz swój typ"
+              value={formik.values.customType || ''}
+              onChange={formik.handleChange}
+              error={formik.touched.customType && Boolean(formik.errors.customType)}
+              fullWidth
+              sx={{ marginTop: 1 }}
+            />
+          )}
+
+          {formik.touched.type && formik.errors.type && (
+            <div style={{ color: 'red' }}>{formik.errors.type}</div>
+          )}
+
+          {formik.touched.customType && formik.errors.customType && (
+            <div style={{ color: 'red' }}>{formik.errors.customType}</div>
+          )}
+        </FormControl>
+
 
       <TextField
         fullWidth

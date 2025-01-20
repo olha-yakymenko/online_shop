@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
+import useMessageHandler from './hooks/useMessageHandler'
 const OrdersComponent = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { message, setMessage } = useMessageHandler();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -14,9 +14,10 @@ const OrdersComponent = () => {
         }
         const data = await response.json();
         console.log(data);
-        setOrders(data);
+        const sortedOrders = data.sort((a, b) => a.id - b.id);
+        setOrders(sortedOrders);
       } catch (error) {
-        setError(error.message);
+        setMessage(error.message, 'error');
       } finally {
         setLoading(false);
       }
@@ -45,7 +46,7 @@ const OrdersComponent = () => {
         )
       );
     } catch (error) {
-      setError(error.message);
+        setMessage(error.message, 'error');
     }
   };
 
@@ -70,7 +71,7 @@ const OrdersComponent = () => {
     <div>
       <h1>Lista Zamówień</h1>
       {loading && <p>Ładowanie...</p>}
-      {error && <p>Wystąpił błąd: {error}</p>}
+      {message.type==='error' && <p>Wystąpił błąd: {message.text}</p>}
       <table>
         <thead>
           <tr>

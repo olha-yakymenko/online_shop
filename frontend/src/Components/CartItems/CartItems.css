@@ -267,10 +267,6 @@
     color: #ff5a5a;
 }
 
-.cartitems-promo-list p[style*="color: red"] {
-    color: red !important;
-}
-
 .message {
     padding: 10px;
     margin: 10px 0;

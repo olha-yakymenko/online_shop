@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../Context/UserContext';
+import './OrderList.css'
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
@@ -39,31 +40,32 @@ const OrderList = () => {
 
   return (
     <div>
-      <h2>Twoje Zamówienia</h2>
+      <h2>Your Orders</h2>
       {error && <div style={{ color: 'red' }}>{error}</div>}
       {orders.length === 0 ? (
-        <p>Brak zamówień dla tego użytkownika.</p>
+        <p>You do not have any orders</p>
       ) : (
         <ul>
-          {orders.map((order) => (
-            <li key={order.id}>
-              <div>
-                <strong>Zamówienie nr {order.id}</strong> (Złożone: {new Date(order.created_at).toLocaleDateString()})
-              </div>
-              <div>Status: {order.status}</div>
-              <div>Adres dostawy: {order.address}</div>
+          <div className="order-list">
+            {orders.map((order) => (
+              <div key={order.id} className="order-item">
+                <div>
+                  <strong>Order No. {order.id}</strong> (Placed on: {new Date(order.created_at).toLocaleDateString()})
+                </div>
+                <div className="status">Status: {order.status}</div>
+                <div className="address">Delivery Address: {order.address}</div>
 
-              <h3>Produkty:</h3>
-              <ul>
-                {order.products.map((product, index) => (
-                  <li key={index}>
-                    <strong>{product}</strong>
-                  </li>
-                ))}
-              </ul>
-              <h3>Price: </h3><div>{order.price}</div>
-            </li>
-          ))}
+                <h3>Products:</h3>
+                <ul>
+                  {order.products.map((product, index) => (
+                    <li key={index}>{product}</li>
+                  ))}
+                </ul>
+
+                <div className="price">Price: {order.price} PLN</div>
+              </div>
+            ))}
+          </div>
         </ul>
       )}
     </div>

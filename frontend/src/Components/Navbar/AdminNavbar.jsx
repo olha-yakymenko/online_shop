@@ -13,7 +13,7 @@ const AdminNavbar = () => {
   return (
     <AppBar position="static" className="nav-logo">
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
           Admin Panel
         </Typography>
         <Button color="inherit" component={Link} to="/admin" className="nav-menu-link">Store Status</Button>

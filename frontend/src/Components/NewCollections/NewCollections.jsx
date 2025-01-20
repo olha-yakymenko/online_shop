@@ -1,16 +1,12 @@
 import React from 'react';
 import './NewCollections.css'
 import {useContext} from 'react'
-// import all_product from '../Assets/all_product';
-// import product_availability from '../Assets/availibility';
 import { ProductContext } from '../../Context/ProductContext';
 import Item from '../Item/Item'
 const NewCollections = () => {
     const {all_product}=useContext(ProductContext)
     const cat_product = all_product
         .map((item) => {
-            console.log(item)
-            // const availability = product_availability.find((avail) => avail.id === item.id);
             return {
                 ...item,
                 isavailable: item ? item.isavailable : false,

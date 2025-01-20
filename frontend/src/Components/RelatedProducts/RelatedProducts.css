@@ -35,6 +35,9 @@
     .relatedproducts hr {
         width: 150px;
     }
+    .relatedproducts-item {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 768px) {

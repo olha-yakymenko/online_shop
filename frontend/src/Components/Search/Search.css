@@ -1,14 +1,5 @@
 .nav-search {
     position: relative;
-    /* max-width: 500px; */
-    /* margin: 0 auto; */
-    /* padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    height: 50px; */
-    margin-top: 30px;
 }
 
 .nav-search input {
@@ -99,4 +90,23 @@
     .search-result-item {
         padding: 8px;
     }
+}
+
+
+.search-results-list {
+    display: block;
+    margin-top: 10px;
+}
+
+.search-result-item {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.no-results-message {
+    color: #ff0000;
+    font-style: italic;
+    margin-top: 20px;
 }

@@ -1,13 +1,10 @@
 import React, { useContext } from 'react';
 import { ShopContext } from '../Context/ShopContext';
 import { useParams } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import Breadcrum from '../Components/Breacrums/Breadcrum';
 import ProductDisplay from '../Components/ProductDisplay/ProductDisplay';
 import DescriptionBox from '../Components/DescriptionBox/DescriptionBox';
 import RelatedProducts from '../Components/RelatedProducts/RelatedProducts';
-
-const queryClient = new QueryClient();
 
 const Product = () => {
     const shopContext = useContext(ShopContext);
@@ -26,14 +23,12 @@ const Product = () => {
     }
 
     return (
-        <QueryClientProvider client={queryClient}>
             <div>
                 <Breadcrum product={product} />
                 <ProductDisplay product={product} />
                 <DescriptionBox product={product} />
                 <RelatedProducts product={product} />
             </div>
-        </QueryClientProvider>
     );
 };
 
