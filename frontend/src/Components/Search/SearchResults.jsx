@@ -28,16 +28,19 @@ const SearchResults = () => {
     };
 
     const filterProducts = (products) => {
+        console.log(products)
+        console.log(filters)
         return products.filter(item => item.isavailable===true).filter((product) => {
+            console.log(product)
             const matchesSize =
                 filters.size.length === 0 ||
-                (product.filters?.sizes &&
-                    filters.size.every((size) => product.filters.sizes.includes(size)));
-
+                (product?.sizes &&
+                    filters.size.every((size) => product.sizes.includes(size)));
+            console.log(matchesSize)
             const matchesColor =
                 filters.color.length === 0 ||
-                (product.filters?.colors &&
-                    filters.color.every((color) => product.filters.colors.includes(color)));
+                (product.colors &&
+                    filters.color.every((color) => product.colors.includes(color)));
 
             const matchesPrice =
                 product.new_price >= filters.priceRange[0] && product.new_price <= filters.priceRange[1];

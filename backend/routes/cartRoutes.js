@@ -4,7 +4,9 @@ const nodemailer=require('nodemailer')
 const router = express.Router();
 const User = require('../models/User');
 const Cart = require('../models/Cart');
-
+const fs=require('fs').promises
+const path = require('path');
+const salesDataPath = path.join(__dirname, '../sales_data.json');
 router.get('/api/cart', async (req, res) => {
     const { email } = req.query;
   
